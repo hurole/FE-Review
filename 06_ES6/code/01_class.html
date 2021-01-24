@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6-class</title>
+</head>
+
+<body>
+    <script>
+        // 创建一个类 class
+        class Father1 {
+            name = "father";
+            // 静态属性
+            static age = 40;
+            // 函数
+            fn1() {
+                console.log(this)
+                console.log("Father1原型上面的方法");
+            }
+            // 函数表达式
+            fn2 = function () {
+                console.log("Father1实例上面的方法");
+            }
+            fn3() {
+                return this.fn1
+            }
+        }
+        // 构造函数
+        function Father2() {
+            // 等同于
+            this.name = "father";
+            this.fn2 = function () {
+                console.log("Father2实例上面的方法");
+            }
+        }
+        Father2.age = 40;
+        Father2.prototype.fn1 = function () {
+            console.log(this);
+            console.log("Father2原型上面的方法")
+        }
+        Father2.prototype.fn3 = function () {
+            return this.fn1
+        }
+        // 实例化对象
+        var f1 = new Father1();
+        var f2 = new Father2();
+        console.log(f1, f2);
+        // staic 等同于为构造函数添加属性
+        console.log(Father1.age, Father2.age); // 40 40
+        // class 中写函数等同于在原型上的方法 原型调用方法
+        console.log(Father1.prototype.fn1(), Father2.prototype.fn1());
+        // 实例调用原型上的方法
+        f1.fn1()
+        f2.fn1()
+        // 在class中的变量赋值都会是实例的属性或者方法 函数表达式fn2
+        console.log(f1.fn2(), f2.fn2());
+        var f1_fn3 = f1.fn3();
+        var f2_fn3 = f2.fn3();
+        console.log(f1_fn3(),f2_fn3()); // class 的this为undefined 构造函数 this为window ;原因class默认开启严格模式
+    </script>
+</body>
+
+</html>

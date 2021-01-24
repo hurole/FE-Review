@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>水平垂直垂直居中</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        /* 定位 需要知道子盒子长、宽 */
+        #container{
+            width: 1000px;
+            height: 500px;
+            background-color: rgb(0, 255, 221);
+            position: relative;
+        }
+        #box{
+            width: 200px;
+            height: 200px;
+            background-color: azure;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -100px;
+            margin-left: -100px;
+        }
+        /* 定位 不需要知道子盒子的长、宽*/
+        /* #container{
+            width: 1000px;
+            height: 500px;
+            background-color: rgb(0, 255, 221);
+            position: absolute;
+            overflow: hidden;
+        }
+        #box{
+            width: 200px;
+            height: 200px;
+            background-color: azure;
+            position: absolute;
+            top:50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        } */
+        /* 定位 不需要知道子盒子的长、宽；但是子盒子是要有宽长、宽，不能由元素撑开子盒子*/
+        /* #container{
+            width: 1000px;
+            height: 500px;
+            background-color: rgb(0, 255, 221);
+            position: absolute;
+            overflow: hidden;
+        }
+        #box{
+            width: 200px;
+            height: 200px;
+            background-color: azure;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+        } */
+        /* flex */
+        /* #container{
+            width: 1000px;
+            height: 500px;
+            background-color: rgb(0, 255, 221);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #box{
+            width: 200px;
+            height: 200px;
+            background-color: azure;
+        } */
+        /* display:table-cell 将子盒变成行内块元素*/
+        /* #container{
+            width: 1000px;
+            height: 500px;
+            background-color: rgb(0, 255, 221);
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+        }
+        #box{
+            width: 200px;
+            height: 200px;
+            background-color: azure;
+            display: inline-block;
+        } */
+        /* js实现 */
+        /* #container{
+            width: 1000px;
+            height: 500px;
+            background-color: rgb(0, 255, 221);
+        }
+        #box{
+            width: 200px;
+            height: 200px;
+            background-color: azure;
+        } */
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="box">
+            子盒子
+        </div>
+    </div>
+    <!-- <script>
+        var box = document.querySelector("#box");
+        var bw = box.clientWidth;
+        var bh = box.clientHeight
+        container.style.position = "relative";
+        box.style.position="absolute";
+        box.style.top = '50%';
+        box.style.left = "50%";
+        box.style.marginTop = bh*-0.5+"px";
+        box.style.marginLeft = bw*-0.5+ "px";
+    </script> -->
+</body>
+</html>
