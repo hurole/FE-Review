@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BFC</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .div1,.div2 {
+            width: 100px;
+            height: 100px;
+            margin: 100px;
+        }
+
+        .div1 {
+            background-color: cadetblue;
+        }
+
+        .div2 {
+            background-color: sandybrown;
+        }
+        /* 解决外边距重叠 */
+        .con {
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <!-- <div class="div">1</div>
+    <div class="div">2</div> -->
+    <div class="con">
+        <div class="div1">1</div>
+    </div>
+    <div class="con">
+        <div class="div2">2</div>
+    </div>
+</body>
+
+</html>

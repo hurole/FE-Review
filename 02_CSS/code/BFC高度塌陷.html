@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BFC</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .div1{
+            background-color: cadetblue;
+            border: 2px solid #000;
+            overflow: hidden;
+        }
+        .div2{
+            float: left;
+            width: 100px;
+            height: 100px;
+            background-color: sandybrown;
+        }
+    </style>
+</head>
+<body>
+    <div class="div1">
+        <div class="div2">
+            2
+        </div>
+    </div>
+</body>
+</html>
