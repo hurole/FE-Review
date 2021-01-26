@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>flex布局</title>
+    <style>
+        #container {
+            display: flex;
+            /* display: inline-flex*/
+            background-color: silver;
+            flex-flow: row;
+            /* justify-content: center; */
+            height: 300px;
+        }
+
+        #container>div:nth-child(1) {
+            background-color: goldenrod;
+            width: 100px;
+            flex-grow: 1;
+            flex-shrink: 0;
+        }
+
+        #container>div:nth-child(2) {
+            background-color: coral;
+            flex-basis: 300px;
+            flex-grow: 1;
+            flex-shrink: 0;
+
+        }
+
+        #container>div:nth-child(3) {
+            background-color: darkseagreen;
+            width: 100px;
+            flex-shrink: 0;
+            flex-grow: 1;
+        }
+
+        #container>div:nth-child(4) {
+            background-color: lavenderblush;
+            flex-shrink: 0;
+            width: 100px;
+            flex-grow: 1;
+        }
+
+        #container>div:nth-child(5) {
+            background-color: skyblue;
+            width: 100px;
+            flex-shrink: 0;
+            flex-grow: 1;
+        }
+
+        #container>div:nth-child(6) {
+            background-color: sandybrown;
+            flex-shrink: 0;
+            width: 100px;
+            flex-grow: 1;
+            align-self: flex-end;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+        <div>6</div>
+    </div>
+</body>
+
+</html>
