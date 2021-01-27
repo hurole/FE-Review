@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+  </head>
+  <body>
+    表单也是简单请求(Content-Type:x-www-form-urlencode)
+    <form action="http://localhost:3000/cors/simple" method="post">
+      账号：<input type="text" name="userId" /><br />
+      密码：<input type="password" name="password" />
+      <input type="submit" />
+    </form>
+    <div style="margin-top: 20px">
+      <button type="button" id="btn1">发送简单请求</button>
+      <button type="button" id="btn2">发送非简单请求</button>
+    </div>
+    <script type="text/javascript">
+      var btn1 = document.querySelector("#btn1");
+      var btn2 = document.querySelector("#btn2");
+      // 发送CORS简单请求
+      btn1.addEventListener("click", function () {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://localhost:3000/cors/simple", true);
+        // 跨域请求携带cookie
+        xhr.withCredentials = true;
+        xhr.send("简单请求");
+        xhr.onreadystatechange = function () {
+          if (xhr.status == 200 && xhr.readyState == 4) {
+            var xbar = xhr.getResponseHeader("X-Bar");
+            var xfoo = xhr.getResponseHeader("X-Foo");
+            console.log("响应", xhr.responseText);
+            // server中指定X-Bar,未指定X-Foo
+            console.log("响应扩展头X-Bar", xbar);
+            console.log("响应扩展头X-Foo", xfoo);
+          }
+        };
+      });
+      // 发送CORS非简单请求 这里设置Content-Type:application/json
+      btn2.addEventListener("click", function () {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://localhost:3000/cors/no-simple", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(
+          JSON.stringify({
+            a: 1
+          })
+        );
+        xhr.onreadystatechange = function () {
+          if (xhr.status == 200 && xhr.readyState == 4) {
+            console.log(xhr.responseText);
+          }
+        };
+      });
+    </script>
+  </body>
+</html>
