@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深拷贝</title>
+</head>
+<body>
+    <script>
+        // 深拷贝 递归拷贝整个对象
+        function deepClone(obj){
+            // null是基本类型 但是typeof是'object'
+            if(obj===null){
+                return null;
+            }
+            // 基本类型
+            if(typeof obj!=='object' ){
+                return obj;
+            }
+            // 下面全是引用类型情况
+            // 正则
+            if(obj instanceof RegExp){
+                return new RegExp(obj);
+            }
+            // 日期
+            if(obj instanceof Date){
+                return new Date(obj);
+            }
+            var newObj = new obj.constructor();
+            for(let key in obj){
+                if(obj.hasOwnProperty(key)){
+                    newObj[key]=deepClone(obj[key]);
+                }
+            }
+            return newObj;
+        }
+        var date = new Date();
+        // 测试
+        var obj={
+            a:1,
+            b:{
+                c:/^1/
+            },
+            d:{
+                e: function(){
+                    return 1;
+                }
+            },
+            f:date
+        }
+        obj.d.e.pp ={pp:1};
+        var obj1 = deepClone(obj)
+        console.log(obj,obj1);
+        console.log(obj===obj1);
+        console.log(obj.a===obj1.a); // true
+        console.log(obj.b===obj1.b);
+        console.log(obj.b.c===obj1.b.c);
+        console.log(obj.d===obj1.d);
+        console.log(obj.d.e === obj1.d.e);
+        console.log(obj.d.e.pp===obj1.d.e.pp);
+        obj.d.e.pp.pp=10
+        console.log(obj1.d.e.pp);
+        console.log(obj.f===obj1.f);
+    </script>
+</body>
+</html>

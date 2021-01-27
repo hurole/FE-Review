@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>浅拷贝</title>
+</head>
+
+<body>
+    <script>
+        // 浅拷贝 只是将老对象的属性复制给新对象，因为属性可能是引用类型，此时复制的只是引用类型在堆中的地址，所以对象属性复制前后相等指向同一个对象值。
+        function shallowClone(obj) {
+            // 保证实例拷贝 所属同一个类
+            var newObj = new obj.constructor();
+            for (const key in obj) {
+                if (Object.hasOwnProperty.call(obj, key)) {
+                    newObj[key] = obj[key];
+                }
+            }
+            return newObj;
+        }
+        // 测试 
+        var obj = {
+            a: 1, b: {
+                name: "clone"
+            }, c: /$1/
+        }
+        var obj1 = shallowClone(obj);
+        console.log(obj === obj1);
+        var arr = [1, [2, 3], 4];
+        var arr1 = shallowClone(arr);
+        console.log(arr, arr1);
+        console.log(arr === arr1);
+    </script>
+</body>
+
+</html>
