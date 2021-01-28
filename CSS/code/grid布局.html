@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>grid布局</title>
+  <style>
+    #container{
+      display: grid;
+      /* 1、定义行高 */
+      /* grid-template-rows:100px 100px 100px; */
+      /* 避免行数过多 重复写相同值 可用repeat(重复次数,重复的值)函数 */
+      grid-template-rows:repeat(3,100px);
+      /* 2、定义列宽 */
+      /* grid-template-columns: 100px 100px 100px; */
+      /* grid-template-columns:repeat(3,100px); */
+      grid-template-columns: repeat(2,100px 150px);
+      /* 3、auto-fill 尽可能容纳多的单元格 */
+      /* grid-template-columns:repeat(auto-fill,200px) */
+      /* 4、fr关键词 比例行高或列宽的比例 */
+      /*  三列 列宽比1：2：3 */
+      /* grid-template-columns: 1fr 2fr 3fr; */
+      /* fr可以与绝对长度单位混用*/
+      /* grid-template-columns: 100px 2fr 1fr;  */
+      /* 5、minmax()函数 接受两个参数 第一个是最小值，第二个是最大值 */
+      /* grid-template-columns: 1fr 1fr minmax(20px,100px); */
+      /* 6、auto关键字 由浏览器决定长度*/
+      /* 去掉两边两列的宽度，剩余宽度就是第二列的 auto，但宽度不会小于内容宽度 */
+      /* grid-template-columns: 100px auto 150px; */
+      /* grid-template-columns: 100px auto 1fr; */
+      /* 网格线名称 可以给网格线设置名字 语法[name] 也可以有多个名字[name1 name2 name3]*/
+      grid-template-columns: [col1] 100px [col2 line2] 1fr [col3] 1fr [col4];
+      /* 间距 gap有三个属性 grid-gap grid-row-gap grid-column-gap */
+      /* 行间距 */
+      /* grid-row-gap:20px; */
+      /* 列间距 */
+      /* grid-column-gap: 30px; */
+      /* 复合间距 可以两个值(第一个值为行间距，第二个值为列间距) 也可以一个值（行列间距）*/
+      grid-gap:30px 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+    <div>5</div>
+    <div>6</div>
+    <div>7</div>
+    <div>8</div>
+    <div>9</div>
+  </div>
+  <footer>footer</footer>
+</body>
+</html>
