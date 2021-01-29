@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,11 +10,11 @@
       /* 1、定义行高 */
       /* grid-template-rows:100px 100px 100px; */
       /* 避免行数过多 重复写相同值 可用repeat(重复次数,重复的值)函数 */
-      grid-template-rows:repeat(3,100px);
+      /* grid-template-rows:repeat(3,100px); */
       /* 2、定义列宽 */
       /* grid-template-columns: 100px 100px 100px; */
       /* grid-template-columns:repeat(3,100px); */
-      grid-template-columns: repeat(2,100px 150px);
+      /* grid-template-columns: repeat(2,100px 150px); */
       /* 3、auto-fill 尽可能容纳多的单元格 */
       /* grid-template-columns:repeat(auto-fill,200px) */
       /* 4、fr关键词 比例行高或列宽的比例 */
@@ -29,19 +29,79 @@
       /* grid-template-columns: 100px auto 150px; */
       /* grid-template-columns: 100px auto 1fr; */
       /* 网格线名称 可以给网格线设置名字 语法[name] 也可以有多个名字[name1 name2 name3]*/
-      grid-template-columns: [col1] 100px [col2 line2] 1fr [col3] 1fr [col4];
-      /* 间距 gap有三个属性 grid-gap grid-row-gap grid-column-gap */
+      /* grid-template-columns: [col1] 100px [col2 line2] 1fr [col3] 1fr [col4]; */
+      /* 间距 gap有三个属性 gap row-gap column-gap */
       /* 行间距 */
-      /* grid-row-gap:20px; */
+      /* row-gap:20px; */
       /* 列间距 */
-      /* grid-column-gap: 30px; */
+      /* column-gap: 30px; */
       /* 复合间距 可以两个值(第一个值为行间距，第二个值为列间距) 也可以一个值（行列间距）*/
-      grid-gap:30px 10px;
+      /* gap:30px 10px; */
+      /* grid-template-areas 划分区域 只有相邻的单元格可以组成一个区域 . 代表未划分 */
+      /* grid-template-areas: 'a a c' 'd d f' 'g g i' 'p p .'; */
+      /* grid-auto-flow 项目排列规则 默认先行后列：先排满一行再排下一行*/
+      /* 先列后行 column ，先行后列 row，先行后列密集排列 row dense，先列后行密集 column dense */
+      /* grid-auto-flow: column dense; */
+      /* jusitify-items 设置单元格内容水平对齐方式 start end center stretch*/
+      /* justify-items: center; */
+      /* align-items 设置单元格内容垂直对齐方式 start end center stretch */
+      /* align-items:center;  */
+      /* 符合属性 place-items：【align-items】[jusitify-items] 第一个值是垂直对齐 第二个是水平;也可以只写一个值*/
+      /* place-items:end end; */
+      /* place-items: center; */
+      /* jusitify-content 整个内容在容器内水平方向的对齐方式 start end center stretch space-around space-between space-evenly*/
+      /* justify-content: center; */
+      /* align-content 整个内容在容器内垂直方向的对齐方式 start | end | center | stretch | space-around | space-between | space-evenly; */
+      /* align-content: stretch; */
+      /* height: 500px; */
+      /* space-content 是复合写法 第一个值：垂直 第二个值：水平 */
+      /* grid-auto-rows:50px; 自动创建行，本来设置了三行 但是给某个项目 指定grid-row-start：4属性，也就是该项目从第四行开始，但是没有设置第4行，此时就会自动创建第四行，高度50px  */
+      /* grid-auto-rows: 50px; */
+      /* grid-auto-columns 自动创建列*/
+      /* grid-template 属性是 grid-template-rows ,grid-template-columns,grid-template-areas的复合写法 */
+      /* grid属性是grid-template-rows,grid-template-columns,grid-template-areas,grid-auto-rows,grid-auto-columns,grid-auto-flow属性合并 */
+      /* 项目属性 */
+    }
+    .container{
+      font-size: 2em;
+      display: grid;
+      /* justify-items:space-between; */
+      grid-template-columns: repeat(2,1fr);
+      grid-auto-rows: 50px;
+      grid-template-rows: repeat(3,150px);
+      /* grid-template-areas: "a b" "d e"; */
+    }
+    .container div:nth-child(1){
+      background-color: antiquewhite;
+    }
+    .container div:nth-child(2){
+      background-color: lightcoral;
+    }
+    .container div:nth-child(3){
+      background-color: olive;
+    }
+    .container div:nth-child(4){
+      background-color: rebeccapurple;
+    }
+    .container div:nth-child(5){
+      background-color: khaki;
+    }
+    .container div:nth-child(6){
+      background-color: slategray;
+    }
+    .container div:nth-child(7){
+      background-color: aquamarine;
+    }
+    .container div:nth-child(8){
+      background-color: darkcyan;
+    }
+    .container div:nth-child(9){
+      background-color: saddlebrown;
     }
   </style>
 </head>
 <body>
-  <div id="container">
+  <div class="container">
     <div>1</div>
     <div>2</div>
     <div>3</div>

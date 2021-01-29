@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .container{
+      display:grid;
+      grid-template-columns: 200px auto 100px;
+      grid-template-rows: 1fr;
+    }
+    .container div:nth-child(1){
+      background-color: antiquewhite;
+    }
+    .container div:nth-child(2){
+      background-color: brown;
+    }
+    .container div:nth-child(3){
+      background-color: cyan;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div>left</div>
+    <div>center</div>
+    <div>right</div>
+  </div>
+</body>
+</html>
