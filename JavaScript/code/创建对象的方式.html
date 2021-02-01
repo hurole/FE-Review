@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创建对象</title>
+</head>
+
+<body>
+    <script>
+        // 工厂模式
+        // function objFactory(name){
+        //     var obj = new Object();
+        //     obj.name = name;
+        //     obj.getName = function(){
+        //         return this.name;
+        //     }
+        //     return obj;
+        // }
+        // var obj = new objFactory("huahua");
+        // console.log(obj);
+        // 构造函数模式
+        // function Person(name){
+        //     this.name = name;
+        //     this.getName = function(){
+        //         return this.name;
+        //     }
+        // }
+        // var person = new Person("hurole");
+        // console.log(person);
+        // 构造函数优化
+        // function Person(name) {
+        //     this.name = name;
+        //     this.getName = getName;
+        // }
+        // function getName(){
+        //     return this.name;
+        // }
+        // var person = new Person("hurole");
+        // console.log(person)
+        // 原型模式
+        // function Person(){
+
+        // }
+        // Person.prototype.name = "hurole";
+        // Person.prototype.getName = function(){
+        //     return this.name;
+        // }
+        // var p = new Person();
+        // console.log(p);
+        // 原型优化1
+        // function Person() {
+
+        // }
+        // Person.prototype = {
+        //     name: "hurole",
+        //     getName: function () {
+        //         return this.name;
+        //     }
+        // }
+        // var p = new Person();
+        // 组合模式
+        // function Person(name) {
+        //     this.name = name;
+        // }
+        // Person.prototype = {
+        //     constructor:Person,
+        //     getName: function () {
+        //         return this.name;
+        //     }
+        // }
+        // var p = new Person("hurole");
+        // 动态原型模式
+        // function Person(name) {
+        //     this.name = name;
+        //     if(typeof this.getName!== 'function'){
+        //         Person.prototype.getName=function(){
+        //             return this.name;
+        //         }
+        //     }
+        // }
+        // var p = new Person("hurole");
+        // var p1 = new Person("huliya");
+        // console.log(p,p.getName());
+        // console.log(p1,p1.getName());
+        function Person(name) {
+            var obj = new Object();
+            obj.name = name;
+            obj.getName = function () {
+                return this.name;
+            }
+            return obj;
+        }
+        var p = new Person('hurole');
+        console.log(p);
+    </script>
+</body>
+
+</html>
