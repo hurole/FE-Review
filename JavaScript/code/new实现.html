@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>new实现</title>
+  </head>
+  <body>
+    <script>
+      function objFactory() {
+        // 第一个参数为构造函数,后续参数传入构造函数
+        var myconstructor = Array.prototype.shift.call(arguments);
+        var newObj = new Object();
+        var res = myconstructor.apply(newObj, arguments);
+        newObj.__proto__ = myconstructor.prototype;
+        // res为构造函数返回值，如果typeof 为object 并且不为null 返回res，否则返回newObj
+        return typeof res === "object" ? res || newObj : newObj;
+      }
+      function Fn() {
+        this.name = 1;
+      }
+      var obj = new Fn();
+      var obj1 = objFactory(Fn);
+
+      console.log(obj,obj1);
+    </script>
+  </body>
+</html>
