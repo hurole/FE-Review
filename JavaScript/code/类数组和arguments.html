@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- <script>
+    // 类数组
+    var likeArray = {
+      0:"array like",
+      1:1,
+      length:2
+    }
+    // 获取长度
+    console.log(likeArray.length);
+    // 读写元素
+    console.log(likeArray[0]);
+    likeArray[1] = 2;
+    console.log(likeArray[1]);
+    // 遍历类数组
+    // for(var i = 0; i<likeArray.length;i++){
+      
+    // }
+    // 类数组使用数组方法
+    Array.prototype.push.call(likeArray,"new")
+    console.log(likeArray);
+    // 类数组转换成数组
+    var array1 = Array.prototype.slice.call(likeArray);
+    var array2 = Array.from(likeArray);
+    var array3 = Array.prototype.concat.apply([],likeArray);
+    // 会修改类数组
+    var array4 = Array.prototype.splice.call(likeArray,0);
+    // console.log(likeArray);
+    console.log(array1);
+    console.log(array2);
+    console.log(array3);
+    console.log(array4);
+  </script> -->
+    <script>
+      // Arguments对象
+      // "use strict"
+      function fn(a, b, c) {
+        console.log(a,b,c)
+        console.log(arguments);
+        a="aa";
+        console.log(a,arguments[0]); // aa aa
+        // 未传入的参数c
+        c= "c"
+        console.log(c,arguments[2]); // c undefined
+      }
+      fn("a", "b"); 
+
+    </script>
+  </body>
+</html>
