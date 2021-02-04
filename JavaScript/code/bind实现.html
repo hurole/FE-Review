@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>bind实现</title>
+  </head>
+  <body>
+    <script>
+      Function.prototype.myBind = function (context) {
+        // 获取myBind第二个及以后的参数
+        var args = Array.prototype.slice.call(arguments, 1);
+        var self = this;
+        function Fn() {}
+        var bound = function () {
+          // myBind函数执行后返回的函数bound可以接受参数，myBind的第二个及以后的参数，会与bound的参数拼接起来作为原函数参数
+          var boundArgs = Array.prototype.slice.call(arguments);
+          // 如果myBind()执行后返回的函数bound被当做是构造函数使用，那么传入的context将失效。
+          // 判断bound是否被当作构造函数，判断函数中的this，在构造函数中this指向实例对象
+          return self.apply(this instanceof bound ? this : context, args.concat(boundArgs));
+        };
+        // 保证返回函数的原型
+        Fn.prototype = this.prototype;
+        bound.prototype = new Fn();
+        return bound;
+      };
+      var obj = {
+        name: 1
+      };
+      function fn(a) {
+        console.log(this.name);
+        console.log(a);
+      }
+      var f = fn.myBind(obj, 123);
+      var f1 = fn.bind(obj, 123);
+      console.dir(f);
+      console.dir(f1);
+      f();
+      f1();
+    </script>
+  </body>
+</html>
