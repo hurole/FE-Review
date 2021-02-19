@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Storage</title>
+  </head>
+  <body>
+    <h3>新增或修改</h3>
+    <div>key: <input type="text" id="key" /></div>
+    <div>value: <input type="text" id="value" /></div>
+    <button onclick="add()">添加缓存</button>
+    <h3>删除或清空</h3>
+    <div>key: <input type="text" id="key1" /></div>
+    <div>全部清空：<input type="radio" id="isAll" name="s" />是<input type="radio" name="s" checked="true" />否</div>
+    <button onclick="remove()">删除缓存</button>
+    <h3>查看指定的item</h3>
+    <div>key：<input type="text" id="key2"></div>
+    <button onclick="get()">查看</button>
+    <h3>通过索引查看指定的item</h3>
+    <div>key：<input type="number" id="key3"></div>
+    <button onclick="getByIndex()">通过索引查看</button>
+    <script>
+      function add() {
+        var key = document.getElementById("key").value;
+        var val = document.getElementById("value").value;
+        console.log(val);
+        localStorage.setItem(key, val);
+      }
+      function remove() {
+        var key1 = document.querySelector("#key1").value;
+        var isAll = document.querySelector("#isAll").checked;
+        if (isAll) {
+          localStorage.clear();
+        } else {
+          if (key1) {
+            localStorage.removeItem(key1);
+          } else {
+            alert("属性名不能为空");
+          }
+        }
+      }
+      function get(){
+        var key2 = document.getElementById("key2").value;
+        var res = localStorage.getItem(key2);
+        alert(res);
+      }
+      function getByIndex(){
+        var key3 = document.getElementById('key3').value;
+        var res = localStorage.key(Number(key3))
+        alert(res)
+      }
+    </script>
+  </body>
+</html>
