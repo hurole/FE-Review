@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>sessionStorage</title>
+  </head>
+  <body>
+    <h3>新增或修改</h3>
+    <div>key: <input type="text" id="key" /></div>
+    <div>value: <input type="text" id="value" /></div>
+    <button onclick="add()">添加缓存</button>
+    <h3>删除或清空</h3>
+    <div>key: <input type="text" id="key1" /></div>
+    <div>全部清空：<input type="radio" id="isAll" name="s" />是<input type="radio" name="s" checked="true" />否</div>
+    <button onclick="remove()">删除缓存</button>
+    <h3>查看指定的item</h3>
+    <div>key：<input type="text" id="key2" /></div>
+    <button onclick="get()">查看</button>
+    <h3>通过索引获取key</h3>
+    <div>index：<input type="number" id="key3" /></div>
+    <button onclick="getByIndex()">通过索引获取key</button>
+    <h3>获取存储记录条数</h3>
+    <button onclick="getLength()">记录条数</button>
+    <h3>在新标签或窗口打开页面</h3>
+    <a href="./存储localStorage.html" target="_black">新窗口打开新页</a>
+    <a href="./存储localStorage.html" target="_self">本窗口打开页面</a>
+    <p>
+      1.sessionStorage会话存储会在页面关闭时清除，页面刷新不会丢失<br/>
+      2.打开相同url页面会创建新的会话存储<br/>
+      3.协议+域名+端口 相同才会共享存储。例如：http://a.com和http://a.com:8080存储是相互隔离的<br/>
+      4.在新标签页或者窗口打开新页面会复制原页面的会话存储。新页面和原页面的会话存储不共享。<br/>
+      5.Storage Event:是window上的事件，可以通过window.addEventListener('storage')监听。当页面更改localStorage时，当前页面不会触发storage事件，同域下的其他tab页会触发该事件。所以可已实现同域下不同页面之间的广播机制。
+      事件对象常用属性，oldValue、newValue、key（url相同的两个tab页也会触发storage事件，当setItem时原value和新value相同不会触发事件）。<br/>
+      6.存储空间5M chrome，firefox，edge
+    </p>
+    <script>
+      // 监听storage事件
+      window.addEventListener('storage',(e)=>{
+        console.log(e.oldValue,e.newValue,e.key);
+      })
+      function add() {
+        var key = document.getElementById("key").value;
+        var val = document.getElementById("value").value;
+        console.log(val);
+        sessionStorage.setItem(key, val);
+      }
+      function remove() {
+        var key1 = document.querySelector("#key1").value;
+        var isAll = document.querySelector("#isAll").checked;
+        if (isAll) {
+          sessionStorage.clear();
+        } else {
+          if (key1) {
+            sessionStorage.removeItem(key1);
+          } else {
+            alert("属性名不能为空");
+          }
+        }
+      }
+      function get() {
+        var key2 = document.getElementById("key2").value;
+        var res = sessionStorage.getItem(key2);
+        alert(res);
+      }
+      function getByIndex() {
+        var key3 = document.getElementById("key3").value;
+        var res = sessionStorage.key(Number(key3));
+        alert(res);
+      }
+      function getLength(){
+        var len = sessionStorage.length;
+        alert(len)
+      }
+    </script>
+  </body>
+</html>
