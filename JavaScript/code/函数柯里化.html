@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>函数柯里化</title>
+  </head>
+  <body>
+    <!--<script>
+      // 柯里化 在数学和计算机科学中柯里化是将多个参数的一个函数转换成一系列一个参数的函数的技术。
+      // curry函数 作用：将函数柯里化
+      function curry(fn) {
+        var args = Array.prototype.slice.call(arguments, 1);
+        return function () {
+          var newArgs = args.concat(Array.prototype.slice.call(arguments));
+          return fn.apply(this, newArgs);
+        };
+      }
+      function add(a, b, c) {
+        return a + b + c;
+      }
+      var addCurry=curry(add,1);
+      var res1 = add(1,2,3);
+      console.log(res1);
+      var res2 = addCurry(2,3)
+      console.log(res2);
+    </script>
+  -->
+    <script>
+      // 将多参数函数
+      function sub_curry(fn) {
+        var args = Array.prototype.slice.call(arguments, 1);
+        return function () {
+          var newArgs = args.concat(Array.prototype.slice.call(arguments));
+
+          return fn.apply(this, newArgs);
+        };
+      }
+      function curry(fn, length) {
+        length = length || fn.length;
+        return function () {
+          var len = length - arguments.length;
+          if (arguments.length < length) {
+            var conbined = [fn].concat(Array.prototype.slice.call(arguments));
+
+            return curry(sub_curry.apply(this, conbined), length - arguments.length);
+          } else {
+            return fn.apply(this, arguments);
+          }
+        };
+      }
+      var fn = curry(function (a, b, c) {
+        return [a, b, c];
+      });
+      console.log(fn("a", "b", "c"));
+      console.log(fn("a", "b")("c"));
+      console.log(fn("a")("b")("c"));
+    </script>
+  </body>
+</html>
