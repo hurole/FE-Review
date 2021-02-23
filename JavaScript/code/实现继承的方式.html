@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>实现继承的方式</title>
+  </head>
+  <body>
+    <script>
+      // 实现继承的方式
+      // 1、原型链继承
+      // function Parent() {
+      //   this.name = ["parent"];
+      // }
+      // Parent.prototype.getName = function () {
+      //   return this.name;
+      // };
+      // function Child() {}
+      // // 这个地方 新对象赋值给Child原型 所以Child的所有实例使用的都是同一个name属性
+      // Child.prototype = new Parent();
+      // var child1 = new Child();
+      // var child2 = new Child();
+      // console.log(child1.getName());
+      // child1.name.push(22)
+      // console.log(child1.getName());
+      // console.log(child2.getName());
+      // 2.借用构造函数
+      // function Parent(name) {
+      //   this.name = name;
+      //   this.getName = function () {
+      //     return this.name;
+      //   };
+      // }
+      // function Child(name) {
+      //   Parent.call(this, name);
+      // }
+      // // 实例
+      // var child = new Child("hurole");
+      // console.log(child.getName());
+
+      // 3.组合继承
+      // function Parent(name) {
+      //   this.name = name;
+      // }
+      // Parent.prototype.getName = function () {
+      //   return this.name;
+      // };
+      // function Child(name) {
+      //   Parent.call(this, name);
+      // }
+      // Child.prototype = new Parent();
+      // Child.prototype.constructor = Child;
+      // var child = new Child("hurole");
+      // console.log(child.getName());
+
+      // 4.原型式继承
+      // function createObj(o){
+      //   function F(){
+
+      //   }
+      //   F.prototype = o;
+      //   return new F();
+      // }
+      // var o = createObj({a:1,b:2})
+      // console.log(o);
+
+      //5、寄生式继承
+      // function createObj(o) {
+      //   var obj = Object.create(o);
+      //   obj.say = function () {
+      //     console.log("hi");
+      //   };
+      //   return obj;
+      // }
+      // var obj = createObj({name:1})
+      // obj.say();
+
+      // 6、寄生组合继承
+      function createObj(o) {
+        function F() {}
+        F.prototype = o;
+        return new F();
+      }
+      function doPrototype(child, parent) {
+        var pro = createObj(parent.prototype);
+        pro.constructor = child;
+        child.prototype = pro;
+      }
+
+      // 测试
+      function Parent() {
+        this.name = "parent";
+      }
+      Parent.prototype.getName = function () {
+        return this.name;
+      };
+      function Child() {
+        Parent.call(this);
+      }
+      doPrototype(Child, Parent);
+      var child1 = new Child();
+      console.log(child1.getName());
+    </script>
+  </body>
+</html>
