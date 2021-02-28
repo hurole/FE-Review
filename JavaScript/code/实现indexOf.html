@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实现字符串方法indexOf</title>
+</head>
+
+<body>
+    <script>
+        // substr
+        // function myIndexOf(str, target) {
+        //     var strLength = str.length;
+        //     var targetLength = target.length;
+        //     if (targetLength > strLength) {
+        //         return -1;
+        //     }
+        //     for (var i = 0; i <= strLength - targetLength; i++) {
+        //         if (str.substr(i, targetLength) === target) {
+        //             return i;
+        //         }
+        //     }
+        //     return -1;
+        // }
+
+        // 正则
+        function myIndexOf(str, target) {
+            var reg = new RegExp(target);
+            var res = reg.exec(str);
+            console.log(res);
+            if (res === null) {
+                return -1;
+            } else {
+                return res.index;
+            }
+        }
+        // 测试
+        var str = "ahjkfhaksjhhello";
+        console.log(myIndexOf(str, "hello")); // 11
+        console.log(myIndexOf(str, "sss")); // -1
+    </script>
+</body>
+
+</html>
