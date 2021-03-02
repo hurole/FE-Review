@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      // 生命周期事件
+      window.addEventListener('DOMContentLoaded',function(){
+        console.log("DOMContentLoaded","浏览器已经完全加载了HTML，DOM树构建完成，<imag>和样式表等外部资源尚未加载。");
+      })
+      document.addEventListener("DOMContentLoaded",function(){
+        console.log("document-DOMContentLoaded");
+      })
+      for(var i=0;i<1000000000;i++){
+
+      }
+      console.log(111);
+      window.addEventListener('load',function(){
+        console.log("load","页面完全加载完成，DOM树和CSSOM树都已经构建完成，且合成渲染树，完成页面渲染");
+      })
+      window.addEventListener('beforeunload',function(event){
+        // event.preventDefault();
+        event.returnValue = '关';
+        console.log("beforeunload","将要离开页面时触发，例如刷新和关闭页面时")
+      })
+      window.addEventListener('unload',function(){
+        console.log("unload","用户离开页面时触发");
+      })
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
