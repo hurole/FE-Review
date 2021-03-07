@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebSocket前端</title>
+  </head>
+  <body>
+    <script>
+      var ws = new WebSocket("ws://localhost:8080/");
+      var i = 1;
+      // 监听消息事件
+      console.log("WebSocket状态1:", ws.readyState);
+      ws.onmessage = function (event) {
+        if (event.data) {
+          console.log("WebSocket状态2:", ws.readyState);
+          console.log("第" + i + "条信息：", event.data);
+        }
+        i++;
+      };
+      ws.onopen = function (e) {
+        console.log("连接成功");
+      };
+      // 监听关闭事件
+      ws.onclose = function (event) {
+        console.log("WebSocket状态3:", ws.readyState);
+        console.log("连接关闭。");
+      };
+      ws.onerror = function (event) {
+        console.log("WebSocket状态4:", ws.readyState);
+        console.log("error:", event);
+      };
+      // 20s后关闭WebSocket连接
+      setTimeout(function () {
+        ws.close();
+        console.log("WebSocket状态5:", ws.readyState);
+      }, 20000);
+    </script>
+  </body>
+</html>
