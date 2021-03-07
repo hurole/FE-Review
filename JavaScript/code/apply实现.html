@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>apply实现</title>
+</head>
+
+<body>
+    <script>
+        // apply实现
+        // ES3
+        // Function.prototype.myApply = function (context, arr) {
+        //     if (context === undefined || context === null) {
+        //         context = window;
+        //     }
+        //     var args = [];
+        //     for (var i = 0; i < arr.length; i++) {
+        //         args.push("arr[" + i + "]");
+        //     }
+        //     context.fn = this;
+        //     var res = eval("context.fn(" + args + ")");
+        //     delete context.fn;
+        //     return res;
+        // }
+        //ES6
+        Function.prototype.myApply = function (context, arr) {
+            if (context === undefined || context === null) {
+                context = window;
+            }
+            context.fn = this;
+            var res = context.fn(...arr);
+            delete context.fn;
+            return res;
+        }
+        function test(a, b) {
+            console.log(this);
+            console.log(this.a);
+            console.log(a, b)
+        }
+        var obj = { a: 111 };
+        test.myApply(obj, ["aa", "bb"]);
+    </script>
+</body>
+
+</html>
