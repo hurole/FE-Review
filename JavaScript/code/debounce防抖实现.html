@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>防抖debounce</title>
+</head>
+
+<body>
+    <input type="text" id="input">
+    <script>
+        // 防抖
+        function debounce(fn, ms) {
+            var timer;
+            return function () {
+                var that = this;
+                var args = arguments;
+                clearTimeout(timer);
+                timer = setTimeout(function () {
+                    fn.apply(that, args)
+                }, ms)
+            }
+        }
+        // 立即执行防抖
+        function immediateDebounce(fn, ms) {
+            var timer = null;
+            return function () {
+                if (timer === null) {
+                    fn.apply(this, arguments);
+                } else {
+                    clearTimeout(timer)
+                }
+                timer = setTimeout(function () {
+                    timer = null;
+                }, ms)
+            }
+        }
+        
+        var input = document.getElementById("input");
+        function handle(e) {
+            // 中文输入法key Process
+            console.log("按键：", e.key);
+            console.log("value：", this.value)
+        }
+        input.onkeydown = immediateDebounce(handle, 2000);
+    </script>
+</body>
+
+</html>
