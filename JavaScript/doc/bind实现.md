@@ -73,4 +73,19 @@
    };
    ```
 
+
+5. 完整ES6
+
+   ```js
+   Function.prototype.myBind=function(context,...args){
+       if(context===undefined||context===null){
+           context=window;
+       }
+       var oldFn = this;
+       return function fBound(){
+           return oldFn.apply(this instanceof fBound?this:context,args.concat([...arguments]));
+       }
+   }
+   ```
+
    

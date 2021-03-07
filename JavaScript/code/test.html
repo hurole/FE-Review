@@ -11,17 +11,46 @@
 <body>
   <script>
     // 反转字符串大小写
-    function shiftStr(str) {
-      return str.replace(/[A-Za-z]/g, function (con) {
-        if (con.toUpperCase() === con) {
-          return con.toLowerCase();
-        } else {
-          return con.toUpperCase();
-        }
-      })
+    // function shiftStr(str) {
+    //   return str.replace(/[A-Za-z]/g, function (con) {
+    //     if (con.toUpperCase() === con) {
+    //       return con.toLowerCase();
+    //     } else {
+    //       return con.toUpperCase();
+    //     }
+    //   })
+    // }
+    // var str = "hellO WorLD"
+    // console.log(shiftStr(str));
+    // bind
+    Function.prototype.myBind = function (context) {
+      if (context === undefined || context === null) {
+        context = window
+      }
+      var oldFn = this;
+      var args = Array.prototype.slice.call(arguments, 1);
+      return function fBound() {
+        return oldFn.apply(this instanceof fBound?this:context, args.concat([...arguments]));
+      }
     }
-    var str = "hellO WorLD"
-    console.log(shiftStr(str));
+    function test(a, b) {
+      console.log(this.name, a, b)
+      return {
+        a,b
+      }
+    }
+    var obj = {
+      name: "bind"
+    }
+    function test1(age,sex){
+      this.age = age;
+      this.sex = sex;
+    }
+    var s = test.myBind("a", "aa")("bb");
+    var ss = test.bind("a", "aa")("bb");
+    var ts = test1.myBind(obj,22);
+    var tsobj = new ts("man");
+    console.log(tsobj);
   </script>
 </body>
 
