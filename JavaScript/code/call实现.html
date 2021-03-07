@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>call实现</title>
+</head>
+
+<body>
+    <script>
+        // call是ES3的标准 
+        // ES3版本
+        // Function.prototype.myCall = function (context) {
+        //     if (context === undefined || context === null) {
+        //         context = window;
+        //     }
+        //     context.fn = this;
+        //     var args = [];
+        //     for (var i = 1; i < arguments.length; i++) {
+        //         args.push("arguments[" + i + "]")
+        //     }
+        //     var res = eval('context.fn(' + args + ')');
+        //     delete context.fn;
+        //     return res;
+        // }
+
+
+        // ES6 
+        Function.prototype.myCall = function (context, ...args) {
+            if (context === undefined || context === null) {
+                context = window;
+            }
+            context.fn = this;
+            var res = context.fn(...args);
+            delete context.fn;
+            return res;
+        }
+        function test(a, b) {
+            console.log(this);
+            console.log(this.a);
+            console.log(a, b)
+        }
+        var obj = { a: 111 }
+        test.myCall(obj, "a", "b")
+    </script>
+</body>
+
+</html>
