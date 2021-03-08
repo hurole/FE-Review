@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>节流throttle</title>
+</head>
+
+<body>
+    <input type="text" id="input">
+    <script>
+        // 节流指定时间只触发一次
+
+        // 时间戳实现
+        // function throttle(fn, wait) {
+        //     var time = 0;
+        //     return function () {
+        //         var current = +new Date();
+        //         if (current - time > wait) {
+        //             fn.apply(this, arguments);
+        //             time = current;
+        //         }
+        //     }
+        // }
+
+        // 定时器实现
+        // function throttle(fn, wait) {
+        //     var timer = null;
+        //     return function () {
+        //         if (timer === null) {
+        //             fn.apply(this, arguments);
+        //             timer = setTimeout(function () {
+        //                 timer = null;
+        //             }, wait)
+        //         }
+        //     }
+        // }
+
+        // 触发后执行
+        function throttle(fn, wait) {
+            var timer = null;
+            return function () {
+                var that = this;
+                var args = arguments;
+                if (timer === null) {
+                    timer = setTimeout(function () {
+                        fn.apply(that, args);
+                        timer = null;
+                    }, wait)
+                }
+            }
+        }
+        // test 
+        var input = document.getElementById('input');
+        function handle(e) {
+            console.log("当前值：", e.target.value, this.value)
+        }
+        input.onkeyup = throttle(handle, 2000);
+    </script>
+</body>
+
+</html>
