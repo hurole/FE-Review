@@ -8,11 +8,11 @@
 - [x] 类数组和arguments
 - [x] 创建对象方式
 - [x] 继承方式
-- [ ] 节流和防抖
+- [x] 节流和防抖
 - [ ] XSS、CSRF、SQL注入
 - [ ] cookie和SameSite
-- [ ] websoket
-- [ ] 重绘重排
+- [x] websoket
+- [x] 重绘重排
 - [ ] 函数柯里化
 - [ ] `unicode`字符集和`utf-8`编码规则
 - [ ] 前端路由popstate、hashchange事件
