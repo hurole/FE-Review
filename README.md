@@ -1,4 +1,5 @@
 ## JavaScript部分
+
 - [x] 实现CORS
 - [x] TCP三次握手、四次挥手
 - [x] Web Storage
@@ -11,8 +12,14 @@
 - [x] 节流和防抖
 - [ ] XSS、CSRF、SQL注入
 - [ ] cookie和SameSite
+- [ ] HTTP状态码
+- [ ] Http和Https
 - [x] websoket
 - [x] 重绘重排
 - [ ] 函数柯里化
 - [ ] `unicode`字符集和`utf-8`编码规则
 - [ ] 前端路由popstate、hashchange事件
+- [x] 浏览器的进程与线程
+- [x] 创建对象的方式
+- [x] 实现继承的方式
+- [ ] 类型转换
