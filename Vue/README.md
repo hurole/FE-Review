@@ -1,15 +1,13 @@
 ### 1. Vue基础
 
-- [ ] class和style
-- [ ] v-if和v-else
-- [ ] v-show和v-if
+- [x] 指令
 - [ ] key的作用
-- [ ] computed
-- [ ] watch
+- [x] computed
+- [x] watch
 - [ ] 事件以及事件修饰符
 - [ ] props和$emit
-- [ ] $on、$off和$emit
-- [ ] 生命周期
+- [x] $on、$off、$once和$emit
+- [x] 生命周期
 
 ### 2. Vue高级
 
