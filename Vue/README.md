@@ -1,17 +1,16 @@
 ### 1. Vue基础
 
 - [x] 指令
-- [ ] key的作用
+- [x] key的作用(同React)
 - [x] computed
 - [x] watch
-- [ ] 事件以及事件修饰符
-- [ ] props和$emit
+- [x] 事件以及事件修饰符
 - [x] $on、$off、$once和$emit
 - [x] 生命周期
 
 ### 2. Vue高级
 
-- [ ] 自定义v-model
+- [x] 自定义v-model
 - [ ] $nextTick
 - [ ] refs
 - [ ] slot
