@@ -1,0 +1,23 @@
+# HTTP缓存
+
+## ASCLL
+
+ASCLL（American Standard Code for Information Interchange）美国信息交换标准代码，定义了从A-Za-z0-9（62个字母数字）、普通标点符号（34个，例如空格、%、&、$等）和控制符号（32个，例如换行、制表符）；共128个字符，只占用了一个字节的后面7位，最前面的一位统一规定为0。例如：空格SPACE是32（二进制00100000）
+
+### Unicode
+
+Unicode统一码，万国码。是字符集，包含所有语言的字符。
+
+## UTF-8
+
+UTF-8通用字符集，是针对Unicode的一种可变长编码方式，主要是是为了传输文本时考虑。他可以表示Unicode字符集中的所有字符。涵盖ASCLL。
+
+下面对应1个字节到四个字节时，字符编码的二进制表示，x表示真正存储Unicode编码的位。未填满所有x，高位补0。高位前面几个1就代表占几位，例如
+
+0xxxxxxx
+
+110xxxxx 10xxxxxx
+
+1110xxxx 10xxxxxx 10xxxxxx
+
+11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
