@@ -1,11 +1,51 @@
 # 自定义v-model
 
-v-model指令常用用于表单控件，能够将数据和控件的值进行数据双向绑定。v-model其实是语法糖，例如文本输入框，监听文本输入框的input事件，然后修改数据，同时将数据绑定给文本输入框的value属性。
+v-model指令常用用于表单控件，能够将数据和控件的值进行数据双向绑定。v-model其实默认value属性和input事件的语法糖。例如对文本输入框使用v-model指令，实际文本框触发input事件修改data，data有通过输入框的value属性传递给输入框，实现双向绑定。
 
-实现一个可以使用v-model的组件：
+## 定义组件的v-model指令
+
+因为v-model指令默认是input事件和value属性的语法糖，有些时候并不能满足需求，我们可以通过model参数来修改v-model的默认事件和属性：
+
+model是一个对象，他有两个属性，prop和event。v-model指令默认 model相当于
+
+```js
+export default{
+    model:{
+        prop:'value',
+        event:'input'
+    }
+}
+```
+
+例如下面这个组件没有指定model，也可以实现v-model指令
 
 ```vue
-//CustomeVmodel.vue
+// Custom.vue
+<template>
+  <input type="text" @input="$emit('input',$event.target.value)" :value="value">
+</template>
+
+<script>
+export default {
+    //model:{
+    //    prop:'value',
+    //    event:'input'
+    //},
+    props:[
+        "value"
+    ]
+}
+</script>
+// 父组件
+<template>
+  <Custom v-model="customVal"/>
+</template>
+```
+
+使用model参数改变，默认的属性和事件：
+
+```vue
+//CustomVmodel.vue
 <template>
   <div>
     <input type="text" @input="handle" :value="text" />
