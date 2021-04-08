@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>EventBus</title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            class Bus {
+                constructor() {
+                    this.callbacks = {
+
+                    }
+                }
+                on(type, cb) {
+                    this.callbacks[type] = this.callbacks[type] || []
+                    this.callbacks[type].push(cb)
+                }
+                emit(type, data) {
+                    if (this.callbacks[type])
+                        this.callbacks[type].forEach(cb => cb(data));
+                }
+            }
+
+            // 创建事件总线
+            let bus = new Bus();
+            var component = {
+                data: {
+                    msg: ""
+                }
+            }
+            // 监听change事件 给组件的data赋值
+            bus.on("change", function(e) {
+                console.log("msg", e);
+                component.data.msg = e
+            })
+            // 3s后触发change事件并 传递数据
+            setTimeout(function() {
+                bus.emit('change', "hello")
+            }, 3000)
+        </script>
+    </body>
+</html>

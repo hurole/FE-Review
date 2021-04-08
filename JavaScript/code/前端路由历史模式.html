@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>前端路由-历史模式</title>
+    </head>
+    <body>
+        <ul>
+            <li><a href="/page1">Page1</a></li>
+            <li><a href="/page2">Page2</a></li>
+        </ul>
+        <div id="router-view">
+
+        </div>
+        <script type="text/javascript">
+            // DOMContentLoaded事件 dom加载完成触发
+            window.addEventListener("DOMContentLoaded", load);
+            // 监听popstate事件 当历史记录条目发生变化触发
+            window.addEventListener('popstate', changeView);
+
+            function load() {
+                changeView();
+                // 获取所有带有href属性的a标签元素
+                var aList = document.querySelectorAll('a[href]')
+                // 为所有a标签元素 设置点击事件 点击链接阻止默认行为，防止跳转，使用pushState方法改变地址栏的链接，不会刷新页面和产生跳转。onpopstate并不会监听到pushstate这个行为。所以手动触发事件方法changeView。渲染与路径匹配的组件。
+                aList.forEach(i => {
+                    i.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        // history.replaceState(null,"",i.href); // replaceState历史中不会增加新的记录，类似router.push方法
+                        history.pushState(null, "", i.href);
+                        changeView();
+                    })
+                })
+            }
+            // 根据浏览器当前路径  渲染对应组件page1、page2。默认展示首页组件
+            function changeView() {
+                var routerView = document.querySelector('#router-view');
+                var path = location.pathname;
+                switch (path) {
+                    case '/page1':
+                        routerView.innerHTML = 'Page1';
+                        break;
+                    case '/page2':
+                        routerView.innerHTML = 'Page2';
+                        break;
+                    default:
+                        routerView.innerHTML = 'Home';
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -10,16 +10,17 @@
 - [x] 创建对象方式
 - [x] 继承方式
 - [x] 节流和防抖
+- [x] 前端路由popstate、hashchange事件
+- [x] 浏览器的进程与线程
+- [x] 创建对象的方式
+- [x] 实现继承的方式
+- [x] 实现EventBus事件总线
+- [x] websoket
+- [x] 重绘重排
 - [ ] XSS、CSRF、SQL注入
 - [ ] cookie和SameSite
 - [ ] HTTP状态码
 - [ ] Http和Https
-- [x] websoket
-- [x] 重绘重排
 - [ ] 函数柯里化
 - [ ] `unicode`字符集和`utf-8`编码规则
-- [ ] 前端路由popstate、hashchange事件
-- [x] 浏览器的进程与线程
-- [x] 创建对象的方式
-- [x] 实现继承的方式
 - [ ] 类型转换
