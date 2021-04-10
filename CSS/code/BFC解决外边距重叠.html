@@ -11,7 +11,8 @@
             margin: 0;
         }
 
-        .div1,.div2 {
+        .div1,
+        .div2 {
             width: 100px;
             height: 100px;
             margin: 100px;
@@ -24,21 +25,22 @@
         .div2 {
             background-color: sandybrown;
         }
-        /* 解决外边距重叠 */
+
+        /* 使con变为BFC */
         .con {
             overflow: hidden;
         }
     </style>
 </head>
+
 <body>
-    <!-- <div class="div">1</div>
-    <div class="div">2</div> -->
-    <div class="con">
-        <div class="div1">1</div>
-    </div>
-    <div class="con">
+    <!-- 外边距重叠 -->
+    <div class="div1">1</div>
+    <div class="div2">2</div>
+    <!-- 置于不同的BFC中 -->
+    <!-- <div class="con">
         <div class="div2">2</div>
-    </div>
+    </div> -->
 </body>
 
 </html>

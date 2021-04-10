@@ -1,31 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BFC</title>
     <style>
-        .div1{
-            width: 400px;
-            height: 200px;
-            background-color: cadetblue;
-            position: absolute;
+        * {
+            padding: 0;
+            margin: 0;
         }
-        .div2{
-            float: left;
+
+        .div1 {
+            background-color: cadetblue;
+            border: 2px solid #000;
+            /* div1变成BFC */
+            /* overflow: hidden; */
+        }
+
+        .div2 {
             /* position: fixed; */
+            /* position: absolute; */
+            float: left;
             width: 100px;
             height: 100px;
             background-color: sandybrown;
         }
     </style>
 </head>
+
 <body>
-    <div class="div2">
-        浮动元素里面的文字
-    </div>
     <div class="div1">
-        爱上咖啡和拉萨解放路卡垃圾啊涉及立法卡开哈萨克交流电哈可接受的看见爱上打开哈萨克就复活卡双离合案件话费卡积分好可怜
+        <div class="div2">
+            2
+        </div>
     </div>
 </body>
+
 </html>

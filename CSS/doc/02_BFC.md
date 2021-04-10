@@ -28,7 +28,7 @@
 
 ## `BFC`内部特性
 
-### 同一个`BFC`下的外边距会发生重叠。
+### 同一个`BFC`内，元素的上下的外边距会发生重叠。
 
 html：
 
@@ -59,7 +59,7 @@ css:
 
 解决：
 
-盒子1和盒子2变成`BFC`。例如
+盒子1和盒子2放在不同的`BFC`中。例如给div1、div2都放在con中(con设置overflow:hidden形成BFC)
 
 html:
 
@@ -67,6 +67,14 @@ html:
 <div class="con">
     <div class="div1">1</div>
 </div>
+<div class="con">
+    <div class="div2">2</div>
+</div>
+```
+或者只给其中一个盒子放在BFC中，总之别放到同一个BFC中
+
+```html
+<div class="div1">1</div>
 <div class="con">
     <div class="div2">2</div>
 </div>
@@ -94,7 +102,9 @@ css:
 }
 ```
 
-### `BFC`内部可以包含浮动元素
+### `BFC`内部可以包含浮动元素(不会引起高度塌陷)
+
+正常情况下，普通父盒子中存在脱离文档流的子元素会引起父盒子高度的塌陷，BFC不存在
 
 ```html
 <body>
@@ -112,7 +122,7 @@ css:
 .div1{
     background-color: cadetblue;
     border: 2px solid #000;
-    over
+    overflow:hidden;
 }
 .div2{
     float: left;
