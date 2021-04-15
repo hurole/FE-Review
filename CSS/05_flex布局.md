@@ -59,7 +59,7 @@ Flex布局支持IE10及以上版本浏览器。
 
 - baseline基线对齐。文字的基线。
 
-  ![baseline](../image/基线对齐.png)
+  ![baseline](../Images/基线对齐.png)
 
 ## align-content
 
