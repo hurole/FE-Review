@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实现Promise</title>
+</head>
+
+<body>
+  <script>
+    class MyPromise {
+      // promise内部状态
+      status = 'pedding'
+      // 执行函数中调用resolve时传入的参数
+      value = undefined
+      // 执行函数中调用reject时传入的函数
+      reason = undefined
+      // 执行then方法时 Resolved回调的集合
+      onResolvedArray = [];
+      // 执行then方法时 Rejected回调的集合
+      onRejectedArray = []
+      // 构造函数 参数为执行函数
+      constructor(excutor) {
+        try {
+          // 实例化Promise时直接调用执行函数 传入resole，reject函数
+          excutor(this.resolve, this.reject);
+        } catch (error) {
+          this.reject(error)
+        }
+      }
+      // resolve函数执行后，变更promise内部状态为fulfilled 并且执行then方法收集的onResolved回调函数
+      resolve = (value) => {
+        if (this.status === "pedding") {
+          // 将参数保存 以备then方法的参数使用
+          this.value = value;
+          // 执行then方法收集的onResolved回调函数集合
+          this.onResolvedArray.forEach(item => {
+            item(value);
+          })
+          // 变更promise状态
+          this.status = 'fulfilled'
+        }
+      }
+      // reject函数执行后。变更promise内部状态为rejected 并且执行then方法收集的onRejected回调函数
+      reject = (reason) => {
+        if (this.status === "pedding") {
+          this.reason = reason;
+          this.onRejectedArray.forEach(item => {
+            item(reason);
+          })
+          this.status = "rejected"
+        }
+      }
+
+      then(onResolved, onRejected) {
+        // then方法返回一个promise
+        let p = new Promise((resolve, reject) => {
+          // 当调用then方法时 promise状态已经为fulfilled那么直接调用onResolved回调函数
+          if (this.status === 'fulfilled') {
+            // 保证p这个promise初始化成功后再执行微任务
+            queueMicrotask(() => {
+              try {
+                // 获取onResolved回调函数（then方法的第一个参数）的返回值
+                let result = onResolved(this.value);
+                // 如果返回值为promise
+                if (result instanceof MyPromise) {
+                  // 防止重复引用promise
+                  if (p === result) {
+                    throw new TypeError("Chaining cycle detected for promise #<Promise>")
+                  }
+                  // result的状态变化时 p的状态也变化
+                  result.then(resolve, reject)
+                } else {
+                  //返回值不为promise,将返回值作为resolve的参数，链式调用then方法这个result直接作为onResolve的参数传入
+                  resolve(result);
+                }
+              } catch (error) {
+                reject(error)
+              }
+            })
+          } else if (this.status === 'rejected') {
+            queueMicrotask(() => {
+              try {
+                let result = onRejected(this.reason);
+                if (result instanceof MyPromise) {
+                  if (p === result) {
+                    throw new TypeError("Chaining cycle detected for promise #<Promise>")
+                  }
+                  result.then(resolve, reject)
+                } else {
+                  resolve(result);
+                }
+              } catch (error) {
+                reject(error)
+              }
+            })
+          } else {
+            // 调用then方法时 promise状态仍然为 pedding 也就是此时resolve和reject都未执行
+            // 此时不能执行回调 要将他们保存起来
+            this.onResolvedArray.push(() => {
+              //这里同上面 需要对回调的返回值进行判断。以备then方法链式调用
+              queueMicrotask(() => {
+                try {
+                  let result = onResolved(this.value)
+                  if (result instanceof MyPromise) {
+                    if (result === p) {
+                      throw new TypeError("Chaining cycle detected for promise #<Promise>")
+                    }
+                    result.then(resolve, reject);
+                  } else {
+                    resolve(result)
+                  }
+                } catch (error) {
+                  reject(error)
+                }
+              })
+            });
+            this.onRejectedArray.push(() => {
+              try {
+                queueMicrotask(() => {
+                  let result = onRejected(this.reason)
+                  if (result instanceof MyPromise) {
+                    if (result === p) {
+                      throw new TypeError("Chaining cycle detected for promise #<Promise>")
+                    }
+                    result.then(resolve, reject);
+                  } else {
+                    resolve(result)
+                  }
+                })
+              } catch (error) {
+                reject(error)
+              }
+            });
+          }
+        })
+        return p;
+      }
+      catch(onRejected) {
+        // return是为了让catch函数执行后返回promise
+        return this.then(null, onRejected)
+      }
+    }
+    // 测试
+    let p = new MyPromise((resolve, reject) => {
+      setTimeout(function () {
+        reject("123");
+      }, 1000)
+    })
+
+    let p2 = p.catch(e => {
+      console.log("catch", e);
+      return new MyPromise((r, j) => {
+        setTimeout(function () {
+          j("456");
+        }, 1000)
+      })
+    })
+    let p3 = p2.then(value => {
+      console.log("resolve", value);
+    }, reason => {
+      console.log("reject", reason);
+    })
+  </script>
+</body>
+
+</html>

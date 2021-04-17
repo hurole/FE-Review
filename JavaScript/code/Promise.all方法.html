@@ -1,72 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <script>
-      Promise.myAll = function (iterable) {
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实现Promise.all</title>
+</head>
+
+<body>
+  <script>
+    Promise.myAll = function (arr) {
+      return new Promise((resolve, reject) => {
+        // 存储结果 最终传入resolve函数
         let result = [];
-        let num = 0;
-        return new Promise((resolve, reject) => {
-          if (!iterable.length) {
+        // 结果函数索引
+        let i = 0;
+        // 迭代器中已经被处理的元素数量，如果等于迭代器的长度 那么就可以将result传入resolve函数并执行resolve
+        let resolveNum = 0;
+        // 判断入参是否为可迭代对象
+        if (arr[Symbol.iterator]) {
+          // 当入参（可迭代对象）中为空 直接resolve空数组
+          if (!arr.length) {
             resolve(new Array());
             return;
           }
-          for (let element of iterable) {
-            // 迭代器对象元素如果是Promise
-            if (element instanceof Promise) {
-              element.then(
-                res => {
-                  result[index] = res;
-                  ++num;
-                  if (iterable.length === num) {
+          // 遍历入参
+          for (const iterator of arr) {
+            // 使用立即执行函数，闭包保证 i的值
+            (function (i) {
+              // 如果为promise调用then方法
+              if (iterator instanceof Promise) {
+                iterator.then(res => {
+                  // 将promise执行结果传入 result 并保持对应位置顺序
+                  result[i] = res;
+                  // promise被处理后 将已处理的元素数量加一
+                  ++resolveNum;
+                  // 如果已被处理的元素数量等于入参长度，代表全部处理完毕
+                  if (resolveNum === arr.length) {
                     resolve(result);
                   }
-                },
-                reason => {
-                  reject(reason);
+                }, reason => {
+                  reject(reason)
+                })
+              } else {
+                // 元素不为promise 那么直接将元素 放入结果数字中 保证顺序
+                result[i] = iterator;
+                // 将已处理的元素数量加一
+                resolveNum++;
+                if (resolveNum === arr.length) {
+                  resolve(result);
                 }
-              );
-            } else {
-              result[index] = element;
-              ++num;
-              if (iterable.length === num) {
-                resolve(result);
               }
-            }
+            })(i)
+            i++;
           }
-        });
-      };
-      console.time();
-      function createPro(name, isError, wait) {
-        let promise = new Promise((resolve, reject) => {
-          setTimeout(() => {
-            if (isError) {
-              reject(name + ":reject");
-            }
-            resolve(name + ":resolve");
-          }, wait);
-        });
-        return promise;
-      }
-      let p1 = createPro("p1", true, 1000);
-      let p2 = createPro("p2", true, 3000);
-      let p3 = createPro("p3", false, 2000);
-      let promiseArray = [p1, p2, p3];
-      let otherArray = [p2, "你好", p1];
-      let emptyArray = 789;
-      Promise.all(otherArray)
-        .then(res => {
-          console.log(res);
-          console.timeEnd();
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    </script>
-  </body>
+        } else {
+          // 入参不是可迭代对象 那么抛出错误
+          throw new TypeError(`${arr} is not iterable`)
+        }
+      })
+    }
+    let p1 = new Promise((resolve, reject) => {
+      setTimeout(function () {
+        resolve('p1')
+      }, 3000)
+    })
+    let p2 = new Promise((resolve, reject) => {
+      setTimeout(function () {
+        resolve('p2')
+      }, 1000)
+    })
+    let p3 = new Promise((resolve, reject) => {
+      setTimeout(function () {
+        resolve('p3')
+      }, 2000)
+    })
+    let promiseArr = [p1, p2, p3];
+    let iterable = "abcde";
+    let mix = [p1, 'a', 1];
+    let emptyArray = [];
+    Promise.myAll(mix).then(res => {
+      console.log(res);
+    })
+  </script>
+</body>
+
 </html>
