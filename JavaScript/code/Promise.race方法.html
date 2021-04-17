@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实现Promise.race</title>
+</head>
+
+<body>
+    <script>
+        Promise.myRace = function (arr) {
+            return new Promise((resolve, reject) => {
+                // 判断入参是否可迭代 不可迭代直接报错
+                if (arr[Symbol.iterator]) {
+                    // 入参是空的可迭代对象 直接return
+                    if (!arr.length) {
+                        return;
+                    }
+                    // 遍历入参（可迭代对象）
+                    for (const iterator of arr) {
+                        // 元素为Promise 谁先执行完谁 结果直接传入resolve函数
+                        if (iterator instanceof Promise) {
+                            iterator.then(res => {
+                                resolve(res);
+                            })
+                        } else {
+                            // 元素非promise直接，传入resolve
+                            resolve(iterator)
+                        }
+                    }
+                } else {
+                    throw new TypeError(`${arr} is not iterable`);
+                }
+            })
+        }
+
+
+        // 测试
+        let p1 = new Promise((resolve, reject) => {
+            setTimeout(function () {
+                resolve('p1')
+            }, 3000)
+        })
+        let p2 = new Promise((resolve, reject) => {
+            setTimeout(function () {
+                resolve('p2')
+            }, 1000)
+        })
+        let p3 = new Promise((resolve, reject) => {
+            setTimeout(function () {
+                resolve('p3')
+            }, 2000)
+        })
+        let promiseArr = [p1, p2, p3];
+        let iterable = "abcde";
+        let mix = [p1, 'a', 1];
+        let emptyArray = [];
+        let set = new Set()
+        let s = Promise.myRace(promiseArr).then(res => {
+            console.log(res);
+        }, reject => {
+            console.log(reject);
+        })
+        console.log(s);
+    </script>
+</body>
+
+</html>
