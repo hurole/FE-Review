@@ -28,6 +28,7 @@ http响应码大概分为5类：
 - 203 Non-Authoritative Information(非权威信息) 例如代理向原始服务器转发请求，
 - 204 No Content(没有内容) 服务成功处理请求，没有返回响应体。
 - 205 Reset Content(重置内容) 服务器成功处理请求，响应中没有响应体，页面刷新。
+- 206 Partial Content(部分内容) 断点续传
 
 ## 300系列状态码
 
@@ -43,3 +44,8 @@ http响应码大概分为5类：
 
 - 400 Bad Request(错误请求) 请求的语义有误，或者请求的参数有误，服务器无法理解请求的含义。
 - 401 Unauthorized(未认证) 当前请求需要进行用户验证，
+- 403 Forbidden(禁止访问)
+- 404 Not Found(找不到) 找不到与请求URL对应的资源。
+- 405 Method Not Allowed(请求方法不允许) 
+
+## 500系列状态码
