@@ -23,8 +23,8 @@
 
 ### Http
 
-- [x] [实现CORS](./Http/CORS前后简单实现/CORS跨域资源共享.md)
+- [x] [实现CORS](./Http/CORS跨域资源共享.md)
 
 - [x] [TCP三次握手、四次挥手](./Http/TCP三次握手和四次挥手.md)
-- [ ] [HTTP状态码](./Http/HTTP状态码.md)
+- [x] [HTTP状态码](./Http/HTTP状态码.md)
 - [ ] Http和Https
