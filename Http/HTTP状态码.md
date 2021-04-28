@@ -47,5 +47,16 @@ http响应码大概分为5类：
 - 403 Forbidden(禁止访问)
 - 404 Not Found(找不到) 找不到与请求URL对应的资源。
 - 405 Method Not Allowed(请求方法不允许) 
+- 406 Not Acceptable(不接受) 指定资源已找到但是资源的MIME类型与请求的Accept头中指定的不兼容。
+- 407 Proxy Authentication Required(需要经过代理服务授权) 与401相似，指客户端先要经过代理服务器授权
+- 408 Request Timeout(请求超时) 在服务器许可的等待时间内，客户端一直没有发请求。
+- 409 Conflict(冲突) 表示请求与服务器端目标资源的当前状态相冲突。一般出现在PUT请求中。
+- 410 Gone(过时) 请求的目标资源已经不可用了。
+- 411 Length Required(Content-Length是必须的) 请求的头部中缺少Content-Length字段。
 
 ## 500系列状态码
+- 500 Internal Server Error 服务器端错误
+- 501 Not Implemented(未实现) 服务器未实现请求所需的功能
+- 502 Bad Gateway(网关错误) 作为网关或者代理工作的服务器尝试执行请求时，从上游服务器接收到无效的响应。
+- 503 Service Unavailable(服务不可用) 服务器暂时无法处理请求，可能是服务器过载或正在维护。
+- 504 Gateway Timeout(网关超时) 作为网关或者代理工作的服务器尝试执行请求时，上游服务器响应超时。
