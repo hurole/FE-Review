@@ -95,9 +95,77 @@ foo('a','b'); // ["a","b"]
 
 ### 14. Set
 
+ES6新增的数据结构Set（集合），他类似于数组，但是内部值唯一，集合实现了iterator接口，可以使用for..of遍历和扩展运算符。
+
+方法和属性：
+
+size 返回内部元素个数
+
+add 增加一个元素，返回当前集合
+
+clear 清空集合，返回undefined
+
+delete 删除元素，返回boolean值
+
+has 检测是否包含指定元素，返回boolean值
+
+```js
+// 创建Set
+let set = new Set(['a',1,{}]);
+```
+
 ### 15. Map
 
 ### 16. Symbol
+
+> Symbol是ES6新增的基础数据类型，用于表示唯一的值，类似于字符串。
+
+创建Symbol可以使用以下两种方式
+
+```js
+let a = Symbol('a');
+let b = Symbol.for('b');
+```
+
+Symbol可用于表示唯一的值
+
+```js
+let a = Symbol('a');
+let b = Symbol('a');
+console.log(a === b); //false
+```
+
+Symbol不能和其他数据运算
+
+```js
+let a = Symbol('a');
+let b = Symbol('a');
+// 全都报错
+console.log(a+1);
+console.log(a+'a');
+console.log(a+b);
+```
+
+Symbol常用于对象的属性名，不能使用for...in遍历，使用`Reflect.ownKeys`获取key的数组再进行遍历
+
+```js
+let key={
+    name:Symbol('name'),
+    age:Symbol('age')
+}
+let info = {
+    [key.name]:'hurole',
+    [key.age]:18
+}
+console.log(info[key.name],info[key.age]);
+let s = Reflect.ownKeys(info);
+let d = Object.keys(info);
+console.log(s,d);
+```
+
+Symbol的内置值
+
+例如`Symbol.iterator`可迭代对象调用for..of时会调用对象的`[Symbol.iterator]`方法。
 
 ### 17. for...of
 
