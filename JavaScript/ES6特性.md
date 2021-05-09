@@ -99,15 +99,15 @@ ES6新增的数据结构Set（集合），他类似于数组，但是内部值�
 
 方法和属性：
 
-size 返回内部元素个数
+size 属性返回内部元素个数
 
-add 增加一个元素，返回当前集合
+add 方法增加一个元素，返回当前集合
 
-clear 清空集合，返回undefined
+clear 方法清空集合，返回undefined
 
-delete 删除元素，返回boolean值
+delete 方法删除元素，返回boolean值
 
-has 检测是否包含指定元素，返回boolean值
+has 方法检测是否包含指定元素，返回boolean值
 
 ```js
 // 创建Set
@@ -120,23 +120,23 @@ Map时ES6新增的数据结构，用于存储键值对，类似于对象，但�
 
 方法和属性：
 
-size 返回键值对的个数；
+size 属性返回键值对的个数；
 
-set 添加键值对，
+set 方法添加键值对，
 
-get 传入键返回值
+get 方法传入键返回值
 
-delete 删除指定的键值对，传入键，返回boolean
+delete 方法删除指定的键值对，传入键，返回boolean
 
-clear 清空内部所有键值对
+clear 方法清空内部所有键值对
 
-has 判断是否包键对应的值，返回boolean
+has 方法判断是否包键对应的值，返回boolean
 
-entries 按照插入顺序返回可迭代对象，可迭代对象的元素为 [key,value]
+entries 方法按照插入顺序返回可迭代对象，可迭代对象的元素为 [key,value]
 
-keys 按照插入顺序返回key组成的可迭代对象
+keys 方法按照插入顺序返回key组成的可迭代对象
 
-values 按照插入顺序返回value组成的可迭代对象
+values 方法按照插入顺序返回value组成的可迭代对象
 
 ### 16. Symbol
 
