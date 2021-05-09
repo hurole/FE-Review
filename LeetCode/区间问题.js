@@ -1,6 +1,6 @@
 /**
  *  区间问题 
- *  区间是个对象包含两个属性 stat en 
+ *  区间是个对象包含两个属性 stat end 
  */
 
 function handle(intervals) {
