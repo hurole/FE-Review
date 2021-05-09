@@ -166,7 +166,7 @@ p.then(res=>{
 `Promise.all`接收一个可迭代对象作为参数，返回一个Promise对象。如果参数为Promise组成的数组，那么返回的promise的resolve为所有promse的结果形成的数组。入参为空的可迭代对象，那么resolve结果为空数组。
 
 ```js
-Promise.myAll = function (arr) {
+Promise.myAll = function (iterator) {
     return new Promise((resolve, reject) => {
         // 存储结果 最终传入resolve函数
         let result = [];
@@ -175,25 +175,26 @@ Promise.myAll = function (arr) {
         // 迭代器中已经被处理的元素数量，如果等于迭代器的长度 那么就可以将result传入resolve函数并执行resolve
         let resolveNum = 0;
         // 判断入参是否为可迭代对象
-        if (arr[Symbol.iterator]) {
+        if (iterator[Symbol.iterator]) {
             // 当入参（可迭代对象）中为空 直接resolve空数组
-            if (!arr.length) {
+            let len = iterator.length || iterator.size;
+            if (!len) {
                 resolve(new Array());
                 return;
             }
             // 遍历入参
-            for (const iterator of arr) {
+            for (const item of iterator) {
                 // 使用立即执行函数，闭包保证 i的值
                 (function (i) {
                     // 如果为promise调用then方法
-                    if (iterator instanceof Promise) {
-                        iterator.then(res => {
+                    if (item instanceof Promise) {
+                        item.then(res => {
                             // 将promise执行结果传入 result 并保持对应位置顺序
                             result[i] = res;
                             // promise被处理后 将已处理的元素数量加一
                             ++resolveNum;
                             // 如果已被处理的元素数量等于入参长度，代表全部处理完毕
-                            if (resolveNum === arr.length) {
+                            if (resolveNum === len) {
                                 resolve(result);
                             }
                         }, reason => {
@@ -201,10 +202,10 @@ Promise.myAll = function (arr) {
                         })
                     } else {
                         // 元素不为promise 那么直接将元素 放入结果数字中 保证顺序
-                        result[i] = iterator;
+                        result[i] = item;
                         // 将已处理的元素数量加一
                         resolveNum++;
-                        if (resolveNum === arr.length) {
+                        if (resolveNum === len) {
                             resolve(result);
                         }
                     }
@@ -213,7 +214,7 @@ Promise.myAll = function (arr) {
             }
         } else {
             // 入参不是可迭代对象 那么抛出错误
-            throw new TypeError(`${arr} is not iterable`)
+            throw new TypeError(`${iterator} is not iterable`)
         }
     })
 }
@@ -222,28 +223,32 @@ Promise.myAll = function (arr) {
 ## `Promise.race`实现
 
 ```js
-Promise.myRace = function (arr) {
+Promise.myRace = function (iterator) {
     return new Promise((resolve, reject) => {
         // 判断入参是否可迭代 不可迭代直接报错
-        if (arr[Symbol.iterator]) {
+        if (iterator[Symbol.iterator]) {
             // 入参是空的可迭代对象 直接return
-            if (!arr.length) {
+            let len = iterator.length || iterator.size;
+            if (!len) {
+                resolve(new Array());
                 return;
             }
             // 遍历入参（可迭代对象）
-            for (const iterator of arr) {
+            for (const item of iterator) {
                 // 元素为Promise 谁先执行完谁 结果直接传入resolve函数
-                if (iterator instanceof Promise) {
-                    iterator.then(res => {
-                        resolve(res);
+                if (item instanceof Promise) {
+                    item.then(value => {
+                        resolve(value);
+                    }, reason => {
+                        reject(reason);
                     })
                 } else {
                     // 元素非promise直接，传入resolve
-                    resolve(iterator)
+                    resolve(item)
                 }
             }
         } else {
-            throw new TypeError(`${arr} is not iterable`);
+            throw new TypeError(`${iterator} is not iterable`);
         }
     })
 }
@@ -252,69 +257,71 @@ Promise.myRace = function (arr) {
 ## `Promise.allSettled`实现
 
 ```js
-Promise.myAllSettled = function (arr) {
-    // 返回一个promise
+Promise.myAllSettled = function (iterator) {
+    // Promise.allSettled方法返回一个promise
     return new Promise((resolve, reject) => {
-        // 处理结果
+        // result数组用于存储 迭代器元素的处理结果
         let result = [];
-        // 用于迭代索引
-        let i = 0;
-        // 被处理的元素数量
+        // settledNum记录处理完成的元素数量
         let settledNum = 0;
-        // 判断入参是否为可迭代对象 不是直接报错
-        if (arr[Symbol.iterator]) {
-            // 可迭代对象为空直接返回空数组
-            if (!arr.length) {
+        // 索引 用于按顺序将处理结果存入result
+        let i = 0;
+        // 判断入参是不是可迭代对象
+        if (iterator[Symbol.iterator]) {
+            // 获取入参可迭代对象的元素个数
+            let len = iterator.length || iterator.size;
+            // 可迭代对象为空 直接将空数组传入resolve函数
+            if (!len) {
                 resolve(new Array());
                 return;
             }
             // 遍历可迭代对象
-            for (const iterator of arr) {
-                // 闭包 保证i的值 
+            for (item of iterator) {
+                // 立即执行函数 确保i
                 (function (i) {
-                    // 元素为promise 那么直接执行then函数获取处理结果，放入结果数组
-                    if (iterator instanceof Promise) {
-                        iterator.then(res => {
-                            // 放入结果数组 为对象 有两个属性 status 和value
-                            result[i] = {
-                                value: res,
-                                status: 'fulfilled'
+                    // 如果为Promise 直接调用then方法
+                    if (item instanceof Promise) {
+                        item.then(value => {
+                            // Promise状态为fulfilled 创建一个含有status和value属性的对象
+                            let obj = {
+                                status: 'fulfilled',
+                                value
                             }
-                            // 被处理的元素数量+1
-                                ++settledNum
-                                // 如果被处理的元素数量等于入参长度那么将结果数组返回
-                                if (settledNum === arr.length) {
-                                    resolve(result)
-                                }
+                            // 放入result中，保证顺序
+                            result[i] = obj;
+                            // 处理完成的元素个数加一
+                            ++settledNum;
+                            // 如果处理完成的元素个数等于迭代器中元素的个数 证明全部处理完成
+                            if (len === settledNum) {
+                                resolve(result);
+                            }
                         }, reason => {
-                            // 同理 当promise状态为rejected时也要将promise处理放入结果数组中，并保证顺序
-                            // 对象包含两个属性 status和reason
-                            result[i] = {
-                                reason,
-                                status: 'rejected'
+                            // Promise状态为rejected 创建一个含有status和reason属性的对象
+                            let obj = {
+                                status: 'rejected',
+                                reason
                             }
-                                ++settledNum
-                                if (settledNum === arr.length) {
-                                    resolve(result)
-                                }
-                        })
-                    } else {
-                        // 可迭代对象（入参）的元素不为promise 那么直接将元素放入结果数组
-                        result[i] = {
-                            value: iterator,
-                            status: 'fulfilled'
-                        }
-                            ++settledNum
-                            if (settledNum === arr.length) {
+                            result[i] = obj;
+                            ++settledNum;
+                            if (len === settledNum) {
                                 resolve(result)
                             }
+                        })
+                    } else {
+                        // 非Promise 直接将元素放入result数组 保证顺序
+                        result[i] = item;
+                        ++settledNum;
+                        if (settledNum === len) {
+                            resolve(result);
+                        }
                     }
                 })(i)
-                // 每次遍历将索引+1
+                // 遍历一次i加一
                 i++;
             }
         } else {
-            throw new TypeError(`${arr} is not iterable`)
+            // 入参不可迭代直接抛出错误
+            throw new TypeError(`${iterator} is not iterable`);
         }
     })
 }

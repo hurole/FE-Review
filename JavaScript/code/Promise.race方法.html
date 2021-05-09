@@ -10,28 +10,32 @@
 
 <body>
     <script>
-        Promise.myRace = function (arr) {
+        Promise.myRace = function (iterator) {
             return new Promise((resolve, reject) => {
                 // 判断入参是否可迭代 不可迭代直接报错
-                if (arr[Symbol.iterator]) {
+                if (iterator[Symbol.iterator]) {
                     // 入参是空的可迭代对象 直接return
-                    if (!arr.length) {
+                    let len = iterator.length || iterator.size;
+                    if (!len) {
+                        resolve(new Array());
                         return;
                     }
                     // 遍历入参（可迭代对象）
-                    for (const iterator of arr) {
-                        // 元素为Promise 谁先执行完谁 结果直接传入resolve函数
-                        if (iterator instanceof Promise) {
-                            iterator.then(res => {
-                                resolve(res);
+                    for (const item of iterator) {
+                        // 元素为Promise 谁先完成 谁先将结果传入resolve或reject函数
+                        if (item instanceof Promise) {
+                            item.then(value => {
+                                resolve(value);
+                            }, reason => {
+                                reject(reason);
                             })
                         } else {
                             // 元素非promise直接，传入resolve
-                            resolve(iterator)
+                            resolve(item)
                         }
                     }
                 } else {
-                    throw new TypeError(`${arr} is not iterable`);
+                    throw new TypeError(`${iterator} is not iterable`);
                 }
             })
         }
@@ -40,7 +44,7 @@
         // 测试
         let p1 = new Promise((resolve, reject) => {
             setTimeout(function () {
-                resolve('p1')
+                reject('p1')
             }, 3000)
         })
         let p2 = new Promise((resolve, reject) => {
@@ -59,11 +63,11 @@
         let emptyArray = [];
         let set = new Set()
         let s = Promise.myRace(promiseArr).then(res => {
-            console.log(res);
+            console.log('fulfilled：', res);
         }, reject => {
-            console.log(reject);
+            console.log('rejected:', reject);
         })
-        console.log(s);
+        console.log("race执行结果", s);
     </script>
 </body>
 

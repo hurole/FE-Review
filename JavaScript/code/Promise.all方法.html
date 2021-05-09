@@ -10,7 +10,7 @@
 
 <body>
   <script>
-    Promise.myAll = function (arr) {
+    Promise.myAll = function (iterator) {
       return new Promise((resolve, reject) => {
         // 存储结果 最终传入resolve函数
         let result = [];
@@ -19,25 +19,26 @@
         // 迭代器中已经被处理的元素数量，如果等于迭代器的长度 那么就可以将result传入resolve函数并执行resolve
         let resolveNum = 0;
         // 判断入参是否为可迭代对象
-        if (arr[Symbol.iterator]) {
+        if (iterator[Symbol.iterator]) {
           // 当入参（可迭代对象）中为空 直接resolve空数组
-          if (!arr.length) {
+          let len = iterator.length || iterator.size;
+          if (!len) {
             resolve(new Array());
             return;
           }
           // 遍历入参
-          for (const iterator of arr) {
+          for (const item of iterator) {
             // 使用立即执行函数，闭包保证 i的值
             (function (i) {
               // 如果为promise调用then方法
-              if (iterator instanceof Promise) {
-                iterator.then(res => {
+              if (item instanceof Promise) {
+                item.then(res => {
                   // 将promise执行结果传入 result 并保持对应位置顺序
                   result[i] = res;
                   // promise被处理后 将已处理的元素数量加一
                   ++resolveNum;
                   // 如果已被处理的元素数量等于入参长度，代表全部处理完毕
-                  if (resolveNum === arr.length) {
+                  if (resolveNum === len) {
                     resolve(result);
                   }
                 }, reason => {
@@ -45,10 +46,10 @@
                 })
               } else {
                 // 元素不为promise 那么直接将元素 放入结果数字中 保证顺序
-                result[i] = iterator;
+                result[i] = item;
                 // 将已处理的元素数量加一
                 resolveNum++;
-                if (resolveNum === arr.length) {
+                if (resolveNum === len) {
                   resolve(result);
                 }
               }
@@ -57,10 +58,12 @@
           }
         } else {
           // 入参不是可迭代对象 那么抛出错误
-          throw new TypeError(`${arr} is not iterable`)
+          throw new TypeError(`${iterator} is not iterable`)
         }
       })
     }
+
+    // 测试
     let p1 = new Promise((resolve, reject) => {
       setTimeout(function () {
         resolve('p1')
@@ -80,8 +83,12 @@
     let iterable = "abcde";
     let mix = [p1, 'a', 1];
     let emptyArray = [];
-    Promise.myAll(mix).then(res => {
+    let map = new Map([[1, 1], ['a', 'a']])
+    let set = new Set();
+    Promise.myAll(set).then(res => {
       console.log(res);
+    }).catch(e => {
+      console.log('error', e);
     })
   </script>
 </body>

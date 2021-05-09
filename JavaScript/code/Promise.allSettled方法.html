@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise.allSettled方法</title>
+</head>
+
+<body>
+    <script>
+        Promise.myAllSettled = function (iterator) {
+            // Promise.allSettled方法返回一个promise
+            return new Promise((resolve, reject) => {
+                // result数组用于存储 迭代器元素的处理结果
+                let result = [];
+                // settledNum记录处理完成的元素数量
+                let settledNum = 0;
+                // 索引 用于按顺序将处理结果存入result
+                let i = 0;
+                // 判断入参是不是可迭代对象
+                if (iterator[Symbol.iterator]) {
+                    // 获取入参可迭代对象的元素个数
+                    let len = iterator.length || iterator.size;
+                    // 可迭代对象为空 直接将空数组传入resolve函数
+                    if (!len) {
+                        resolve(new Array());
+                        return;
+                    }
+                    // 遍历可迭代对象
+                    for (item of iterator) {
+                        // 立即执行函数 确保i
+                        (function (i) {
+                            // 如果为Promise 直接调用then方法
+                            if (item instanceof Promise) {
+                                item.then(value => {
+                                    // Promise状态为fulfilled 创建一个含有status和value属性的对象
+                                    let obj = {
+                                        status: 'fulfilled',
+                                        value
+                                    }
+                                    // 放入result中，保证顺序
+                                    result[i] = obj;
+                                    // 处理完成的元素个数加一
+                                    ++settledNum;
+                                    // 如果处理完成的元素个数等于迭代器中元素的个数 证明全部处理完成
+                                    if (len === settledNum) {
+                                        resolve(result);
+                                    }
+                                }, reason => {
+                                    // Promise状态为rejected 创建一个含有status和reason属性的对象
+                                    let obj = {
+                                        status: 'rejected',
+                                        reason
+                                    }
+                                    result[i] = obj;
+                                    ++settledNum;
+                                    if (len === settledNum) {
+                                        resolve(result)
+                                    }
+                                })
+                            } else {
+                                // 非Promise 直接将元素放入result数组 保证顺序
+                                result[i] = item;
+                                ++settledNum;
+                                if (settledNum === len) {
+                                    resolve(result);
+                                }
+                            }
+                        })(i)
+                        // 遍历一次i加一
+                        i++;
+                    }
+                } else {
+                    // 入参不可迭代直接抛出错误
+                    throw new TypeError(`${iterator} is not iterable`);
+                }
+            })
+        }
+        // 测试
+        let p1 = new Promise((resolve, reject) => {
+            setTimeout(function () {
+                reject('p1')
+            }, 3000)
+        })
+        let p2 = new Promise((resolve, reject) => {
+            setTimeout(function () {
+                resolve('p2')
+            }, 1000)
+        })
+        let p3 = new Promise((resolve, reject) => {
+            setTimeout(function () {
+                resolve('p3')
+            }, 2000)
+        })
+        let proArr = [p1, p2, p3];
+        Promise.myAllSettled(proArr).then(res => {
+            console.log("fulfilled:", res);
+        }, err => {
+            console.log("rejected", err);
+        })
+    </script>
+</body>
+
+</html>
