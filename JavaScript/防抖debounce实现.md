@@ -8,7 +8,6 @@
 function debounce(fn,wait){
     var timer;
     return function(){
-        var args = arguments;
         var that = this;
         clearTimeout(timer);
         timer = setTimeout(function(){
