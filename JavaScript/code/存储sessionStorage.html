@@ -10,11 +10,11 @@
     <h3>新增或修改</h3>
     <div>key: <input type="text" id="key" /></div>
     <div>value: <input type="text" id="value" /></div>
-    <button onclick="add()">添加缓存</button>
+    <button onclick="add()">添加数据</button>
     <h3>删除或清空</h3>
     <div>key: <input type="text" id="key1" /></div>
     <div>全部清空：<input type="radio" id="isAll" name="s" />是<input type="radio" name="s" checked="true" />否</div>
-    <button onclick="remove()">删除缓存</button>
+    <button onclick="remove()">删除存储</button>
     <h3>查看指定的item</h3>
     <div>key：<input type="text" id="key2" /></div>
     <button onclick="get()">查看</button>
@@ -24,21 +24,18 @@
     <h3>获取存储记录条数</h3>
     <button onclick="getLength()">记录条数</button>
     <h3>在新标签或窗口打开页面</h3>
-    <a href="./存储localStorage.html" target="_black">新窗口打开新页</a>
-    <a href="./存储localStorage.html" target="_self">本窗口打开页面</a>
-    <p>
-      1.sessionStorage会话存储会在页面关闭时清除，页面刷新不会丢失<br/>
-      2.打开相同url页面会创建新的会话存储<br/>
-      3.协议+域名+端口 相同才会共享存储。例如：http://a.com和http://a.com:8080存储是相互隔离的<br/>
-      4.在新标签页或者窗口打开新页面会复制原页面的会话存储。新页面和原页面的会话存储不共享。<br/>
-      5.Storage Event:是window上的事件，可以通过window.addEventListener('storage')监听。当页面更改localStorage时，当前页面不会触发storage事件，同域下的其他tab页会触发该事件。所以可已实现同域下不同页面之间的广播机制。
-      事件对象常用属性，oldValue、newValue、key（url相同的两个tab页也会触发storage事件，当setItem时原value和新value相同不会触发事件）。<br/>
-      6.存储空间5M chrome，firefox，edge
-    </p>
+    <a href="./存储localStorage.html" target="_black">新窗口打开同源页</a>
+    <a href="http://127.0.0.1:8848/FE-Review/JavaScript/code/%E5%AD%98%E5%82%A8sessionStorage.html" target="_black">新窗口打开非同源页</a>
+    <a href="./存储localStorage.html" target="_self">本窗口打开同源页面</a>
+    <a href="http://127.0.0.1:8848/FE-Review/JavaScript/code/%E5%AD%98%E5%82%A8sessionStorage.html" target="_self">本窗口打开非同源页面</a>
     <script>
       // 监听storage事件
-      window.addEventListener('storage',(e)=>{
-        console.log(e.oldValue,e.newValue,e.key);
+      window.addEventListener('storage',function(event){
+        console.log("发生变动的key:",event.key);
+        console.log("旧值:",event.oldValue);
+        console.log("新值:",event.newValue);
+        console.log("触发事件页面的url:",event.url);
+        console.log("localStorage数据对象:",event.storageArea);
       })
       function add() {
         var key = document.getElementById("key").value;

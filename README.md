@@ -2,6 +2,7 @@
 
 - [x] Web Storage
 - [x] 深浅拷贝
+- [x] 深拷贝完整版
 - [x] call,apply和bind实现
 - [x] new实现
 - [x] 类数组和arguments
