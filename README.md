@@ -16,9 +16,9 @@
 - [x] 实现EventBus事件总线
 - [x] websoket
 - [x] 重绘重排
+- [x] 函数柯里化
 - [ ] XSS、CSRF、SQL注入
 - [ ] cookie和SameSite
-- [ ] 函数柯里化
 - [ ] `unicode`字符集和`utf-8`编码规则
 - [ ] 类型转换
 
