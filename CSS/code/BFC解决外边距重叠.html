@@ -30,17 +30,55 @@
         .con {
             overflow: hidden;
         }
+
+        .div3 {
+            background-color: rgb(109, 41, 41);
+            margin-top: 100px;
+            height: 200px;
+        }
+
+        .div4 {
+            background-color: rgb(48, 6, 102);
+            height: 100px;
+            width: 100px;
+            margin-top: 50px;
+        }
+
+        .bfc {
+            /* 设置bfc */
+            overflow: hidden;
+            /* 添加分隔 */
+            /* border: 1px solid; */
+            /* padding-top: 20px; */
+        }
     </style>
 </head>
 
 <body>
-    <!-- 外边距重叠 -->
+    <!-- 问题：相邻元素外边距重叠 -->
+    <!-- <div class="div1">1</div>
+    <div class="div2">2</div> -->
+
+    <!-- 解决：置于不同的BFC中 -->
+    <!-- 
     <div class="div1">1</div>
-    <div class="div2">2</div>
-    <!-- 置于不同的BFC中 -->
-    <!-- <div class="con">
+    <div class="con">
         <div class="div2">2</div>
-    </div> -->
+    </div> 
+    -->
+
+
+    <!-- 问题：嵌套元素（父子元素）
+        产生原因：父元素margin-top和子元素margin-top之间没有分隔；即没有border、padding或content
+    -->
+    <div class="div3">
+        <div class="div4">4</div>
+    </div>
+    <!-- 解决：设置父元素为BFC，给父元素添加边框等 -->
+    <div class="div3 bfc">
+        <!-- 3 -->
+        <div class="div4">4</div>
+    </div>
 </body>
 
 </html>
