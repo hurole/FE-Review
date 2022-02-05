@@ -23,3 +23,4 @@ Number(null); // 0
 Number(undefined); // NaN
 ```
 
+6. typeof null 结果为object，typeof undefined结果为undefined。存储数据的前三位数据类型，后面才是值，null的前三位与对象类型相同，为000。
