@@ -56,7 +56,7 @@
 
       then(onResolved, onRejected) {
         // then方法返回一个promise
-        let p = new Promise((resolve, reject) => {
+        let p = new MyPromise((resolve, reject) => {
           // 当调用then方法时 promise状态已经为fulfilled那么直接调用onResolved回调函数
           if (this.status === 'fulfilled') {
             // 保证p这个promise初始化成功后再执行微任务
@@ -162,6 +162,18 @@
       console.log("resolve", value);
     }, reason => {
       console.log("reject", reason);
+    })
+    // 多次调用then()此时promise状态pedding，会将回调存入promise内部对应的回调函数集合中，当状态发生变更遍历执行
+    let pp = new Promise(function (resolve, reject) {
+      setTimeout(() => {
+        resolve(1);
+      }, 1000)
+    })
+    pp.then(e => {
+      console.log('e', e)
+    })
+    pp.then(re => {
+      console.log('re', re)
     })
   </script>
 </body>
