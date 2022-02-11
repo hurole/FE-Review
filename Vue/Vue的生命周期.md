@@ -75,7 +75,7 @@
 
 ### 挂载阶段
 
-1. 父组件beforeCreated
+1. 父组件beforeCreate
 2. 父组件created
 3. 父组件beforeMount
 4. 子组件beforeCreate
