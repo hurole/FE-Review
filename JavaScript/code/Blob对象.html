@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blob</title>
+  </head>
+  <body>
+    <input type="file" />
+    <button>上传文件</button>
+    <script>
+      let fileInput = document.querySelector('input');
+      let btn = document.querySelector('button');
+      let blob = null;
+      fileInput.onchange = function (e) {
+        let [file] = e.target.files;
+        blob = new Blob([file], {
+          type: 'image/gif',
+        });
+      };
+      btn.addEventListener('click',function(e){
+        console.log(blob);
+        let fd = new FormData();
+        fd.append('file', blob);
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST',"http://localhost:8080/file");
+        xhr.send(fd);
+        xhr.onreadystatechange=function(e){
+          console.log(xhr.status,xhr.readyState);
+          if(xhr.status===200&&xhr.readyState===4){
+            console.log(e.target.responseText)
+          }
+        }
+      })
+      // let obj = {
+      //   name: 'Linda',
+      //   sex: 'woman',
+      //   age: 23,
+      // };
+      // let blob = new Blob([JSON.stringify(obj)], { type: 'application/json' });
+      // blob.text().then(e => {
+      //   console.log(typeof e);
+      // });
+    </script>
+  </body>
+</html>

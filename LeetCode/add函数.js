@@ -1,8 +1,10 @@
-// 实现1.add(2).add(3) 返回6
+/**
+ * @description  实现1.add(2).add(3) 返回6
+ * @param {Number} num
+ * @returns
+ */
 
 Number.prototype.add = function (num) {
   return this + num;
 };
-// 测试
-let s = (1).add(2).add(3);
-console.log(s);
+module.exports = {};

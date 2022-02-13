@@ -1,0 +1,23 @@
+{
+  "name": "FE-Review",
+  "version": "1.0.0",
+  "description": "- [x] Web Storage\r - [x] 深浅拷贝\r - [x] 深拷贝完整版\r - [x] call,apply 和 bind 实现\r - [x] new 实现\r - [x] 类数组和 arguments\r - [x] 创建对象方式\r - [x] 继承方式\r - [x] 节流和防抖\r - [x] 前端路由\r - [x] 浏览器的进程与线程\r - [x] 创建对象的方式\r - [x] 实现继承的方式\r - [x] 实现 EventBus 事件总线\r - [x] websoket\r - [x] 重绘重排\r - [x] 函数柯里化\r - [ ] XSS、CSRF、SQL 注入\r - [ ] cookie 和 SameSite\r - [ ] 类型转换\r - [ ] 文件断点续传和大文件上传\r - [ ] 垃圾回收标记清除",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --passWithNoTests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hurole/FE-Review.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hurole/FE-Review/issues"
+  },
+  "homepage": "https://github.com/hurole/FE-Review#readme",
+  "devDependencies": {
+    "jest": "^27.5.1"
+  }
+}
