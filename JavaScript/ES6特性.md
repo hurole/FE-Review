@@ -1,9 +1,9 @@
-## ES2015
+## ES2015(ES6)
 
 ### 1. let&const
 
-- let用于声明变量，不能重复声明，没有变量提升，块级作用域。
-- const用于声明常量，不能重复声明，不可重复赋值，声明时需要赋初值，块级作用域。
+- let 用于声明变量，不能重复声明，没有变量提升，块级作用域。
+- const 用于声明常量，不能重复声明，不可重复赋值，声明时需要赋初值，块级作用域。
 - 都存在暂时性死区，即块级作用域中声明了变量，但是不能在声明语句之前访问变量，会报错，代码款的声明语句之前为暂时性死区。
 
 ### 2. 解构赋值
@@ -22,7 +22,7 @@
 - 标签`${}`
 
   ```js
-  let str = 'Lisa';
+  let str = "Lisa";
   console.log(`你好${str}`); // 你好Lisa
   ```
 
@@ -34,8 +34,8 @@
 const prop1 = l;
 const obj = {
   prop1,
-  prop2: 2
-}
+  prop2: 2,
+};
 ```
 
 - 对象方法简写
@@ -43,20 +43,20 @@ const obj = {
 
 ### 5. 箭头函数
 
-- 没有自己的this，this指向箭头函数声明时所在作用域的this。
+- 没有自己的 this，this 指向箭头函数声明时所在作用域的 this。
 - 不能作为构造函数
-- 不能使用arguments
+- 不能使用 arguments
 - 简写：有且只有一个参数时可以省略小括号；只含有一条语句可以省略花括号，箭头后的表达式会作为函数返回值。
 
-### 6. rest参数
+### 6. rest 参数
 
 剩余参数，用三点运算符处理(必须放在参数列表最后）
 
 ```js
-function fn(a,...rest){
-    console.log(rest)
+function fn(a, ...rest) {
+  console.log(rest);
 }
-fn(1,2,3,4,5,6); // [2,3,4,5,6]
+fn(1, 2, 3, 4, 5, 6); // [2,3,4,5,6]
 ```
 
 ### 7. 扩展运算符
@@ -64,19 +64,19 @@ fn(1,2,3,4,5,6); // [2,3,4,5,6]
 三点运算符，可以扩展数组，类数组等
 
 ```js
-let a = [1,2,3];
-let b = [...a,4,5];
+let a = [1, 2, 3];
+let b = [...a, 4, 5];
 console.log(b); // [1,2,3,4,5]
 ```
 
 可以将伪数组转换成数组
 
 ```js
-function foo(){
-	let args = [...arguments];
-    console.log(args);
+function foo() {
+  let args = [...arguments];
+  console.log(args);
 }
-foo('a','b'); // ["a","b"]
+foo("a", "b"); // ["a","b"]
 ```
 
 ### 8. 字符串扩展
@@ -105,7 +105,7 @@ foo('a','b'); // ["a","b"]
 
 ### 14. Set
 
-ES6新增的数据结构Set（集合），他类似于数组，但是内部值唯一，集合实现了iterator接口，可以使用for..of遍历和扩展运算符。
+ES6 新增的数据结构 Set（集合），他类似于数组，但是内部值唯一，集合实现了 iterator 接口，可以使用 for..of 遍历和扩展运算符。
 
 方法和属性：
 
@@ -113,20 +113,20 @@ size 属性返回内部元素个数
 
 add 方法增加一个元素，返回当前集合
 
-clear 方法清空集合，返回undefined
+clear 方法清空集合，返回 undefined
 
-delete 方法删除元素，返回boolean值
+delete 方法删除元素，返回 boolean 值
 
-has 方法检测是否包含指定元素，返回boolean值
+has 方法检测是否包含指定元素，返回 boolean 值
 
 ```js
 // 创建Set
-let set = new Set(['a',1,{}]);
+let set = new Set(["a", 1, {}]);
 ```
 
 ### 15. Map
 
-Map时ES6新增的数据结构，用于存储键值对，类似于对象，但是Map的键可以是任何类型，Map内部实现了iterator接口，可以for...of遍历，可以使用扩展运算符。添加元素时键相同后面会覆盖前面，例如：NaN，+0和-0
+Map 时 ES6 新增的数据结构，用于存储键值对，类似于对象，但是 Map 的键可以是任何类型，Map 内部实现了 iterator 接口，可以 for...of 遍历，可以使用扩展运算符。添加元素时键相同后面会覆盖前面，例如：NaN，+0 和-0
 
 方法和属性：
 
@@ -136,68 +136,68 @@ set 方法添加键值对，
 
 get 方法传入键返回值
 
-delete 方法删除指定的键值对，传入键，返回boolean
+delete 方法删除指定的键值对，传入键，返回 boolean
 
 clear 方法清空内部所有键值对
 
-has 方法判断是否包键对应的值，返回boolean
+has 方法判断是否包键对应的值，返回 boolean
 
 entries 方法按照插入顺序返回可迭代对象，可迭代对象的元素为 [key,value]
 
-keys 方法按照插入顺序返回key组成的可迭代对象
+keys 方法按照插入顺序返回 key 组成的可迭代对象
 
-values 方法按照插入顺序返回value组成的可迭代对象
+values 方法按照插入顺序返回 value 组成的可迭代对象
 
 ### 16. Symbol
 
-> Symbol是ES6新增的基础数据类型，用于表示唯一的值，类似于字符串。
+> Symbol 是 ES6 新增的基础数据类型，用于表示唯一的值，类似于字符串。
 
-创建Symbol可以使用以下两种方式
+创建 Symbol 可以使用以下两种方式
 
 ```js
-let a = Symbol('a');
-let b = Symbol.for('b');
+let a = Symbol("a");
+let b = Symbol.for("b");
 ```
 
-Symbol可用于表示唯一的值
+Symbol 可用于表示唯一的值
 
 ```js
-let a = Symbol('a');
-let b = Symbol('a');
+let a = Symbol("a");
+let b = Symbol("a");
 console.log(a === b); //false
 ```
 
-Symbol不能和其他数据运算
+Symbol 不能和其他数据运算
 
 ```js
-let a = Symbol('a');
-let b = Symbol('a');
+let a = Symbol("a");
+let b = Symbol("a");
 // 全都报错
-console.log(a+1);
-console.log(a+'a');
-console.log(a+b);
+console.log(a + 1);
+console.log(a + "a");
+console.log(a + b);
 ```
 
-Symbol常用于对象的属性名，不能使用for...in遍历，使用`Reflect.ownKeys`获取key的数组再进行遍历
+Symbol 常用于对象的属性名，不能使用 for...in 遍历，使用`Reflect.ownKeys`获取 key 的数组再进行遍历
 
 ```js
-let key={
-    name:Symbol('name'),
-    age:Symbol('age')
-}
+let key = {
+  name: Symbol("name"),
+  age: Symbol("age"),
+};
 let info = {
-    [key.name]:'hurole',
-    [key.age]:18
-}
-console.log(info[key.name],info[key.age]);
+  [key.name]: "hurole",
+  [key.age]: 18,
+};
+console.log(info[key.name], info[key.age]);
 let s = Reflect.ownKeys(info);
 let d = Object.keys(info);
-console.log(s,d);
+console.log(s, d);
 ```
 
-Symbol的内置值
+Symbol 的内置值
 
-例如`Symbol.iterator`可迭代对象调用for..of时会调用对象的`[Symbol.iterator]`方法。
+例如`Symbol.iterator`可迭代对象调用 for..of 时会调用对象的`[Symbol.iterator]`方法。
 
 ### 17. for...of
 
@@ -207,16 +207,135 @@ Symbol的内置值
 
 ### 20. ES Module
 
-## ES2016
+## ES2016(ES7)
 
-## ES2017
+### 1. Array.prototype.includes(value[,fromIndex])
 
-### Object.getOwnPropertyDescriptors
+用于判断数组中是否包含某个值，第一个参数是目标元素，第二个元素可选为数组中从 fromIndex 开始查找目标元素，可以为负值。相较于 indeOf 方法 includes 可以判断 NaN
 
-### String.prototype.padStart
+```js
+let list = [1, "s", false, NaN, []];
+// 原来使用indexOf
+console.log(list.indexOf(1) > -1); // true
+console.log(list.indexOf("s") > -1); // true
+console.log(list.indexOf(NaN) > -1); // false
+// 现在使用includes
+console.log(list.includes(1)); // true
+console.log(list.includes("s")); //
+console.log(list.includes(NaN)); // true
+// 从数组索引为1的位置向后开始查找目标元素1判断是否在数组中
+console.log(list.includes(1, 1)); // false
+// 从数组索引为array.lenth+(-4)的位置向后开始查找目标元素1判断是否在数组中
+console.log(list.includes(1, -4)); // false
+```
 
-### String.prototype.padEnd
+### 2. Exponentiation Operator 求幂运算符
 
-### 在函数的参数列表添加尾逗号
+```javascript
+// Math.pow方法进行指数运算
+Math.pow(2,2); // 4
+// 新增算数运算符 ** 进行指数运算
+let result= 2**2； // 4
+```
 
-### Async/Await
+## ES2017(ES8)
+
+### 1. Object.values(object)
+
+用于获取指定对象的 value 数组
+
+```javascript
+let obj = { a: 1, b: 2, c: 3 };
+Object.values(obj); // [1,2,3]
+```
+
+### 2. Object.entries(object)
+
+用于获取指定对象的[key,value]组成的二维数组
+
+```javascript
+let obj = { a: 1, b: 2, c: 3 };
+Object.entries(obj); // [['a',1],['b',2],['c',3]]
+```
+
+### 3. Object.getOwnPropertyDescriptors(object)
+
+用于获取指定对象的所有自身属性描述符(可能为数据属性描述符和读取属性描述符)
+
+```javascript
+let obj = {
+  a: 1,
+  b: 2,
+  get c() {
+    return 3;
+  },
+};
+Object.getOwnPropertyDescriptors(obj);
+/* 
+{
+  a:{value:1,configurable:true,writable:true,enumerable:true},
+  b:{value:2,configurable:true,writable:true,enumerable:true},
+  c:{set:undefined,get:f,configurable:true,enumerable:true}
+}
+*/
+```
+
+### 4. String.prototype.padStart(length[,char])
+
+从字符串的左侧填充字符 char，达到长度 length，第二个参数不填写，默认填空白符达到指定长度，返回填充后的字符串
+
+```javascript
+let str = "11";
+str.padStart(4, "0"); // '0011'
+str.padStart(4); // '  11'
+```
+
+### 5. String.prototype.padEnd(length[,char])
+
+向字符串的右侧填充字符 char，达到长度 length，第二个参数不填写，默认填空白符达到指定长度，返回填充后的字符串
+
+```javascript
+let str = "11";
+str.padEnd(4, "0"); // '1100'
+str.padEnd(4); // '11  '
+```
+
+### 6. 在函数的参数列表添加尾逗号
+
+```js
+function foo(a, b, c) {
+  return a + b + c;
+}
+foo(1, 2, 3); // 不报错
+```
+
+### 7. Async/Await 异步函数
+
+使用同步写法执行异步函数，异步函数与普通函数的声明和执行类似，声明前面添加 async 关键字，调用都是通过函数名+括弧来调用。async 函数返回一个 promise，await 必须在 async 函数中。
+
+```js
+async function foo() {
+  let s = await 1;
+  console.log(s);
+  return 1;
+}
+foo(); // Promise<1>
+```
+
+async 函数返回一个 promise，如果 return 一个值等同于
+
+```js
+async function foo() {
+  return 1;
+}
+// ==
+async function foo1() {
+  return Promise.resolve(1);
+}
+```
+
+## ES2018(ES9)
+
+### 1. 对象 Spread/Rest`...`
+
+### 2. Promise.finally
