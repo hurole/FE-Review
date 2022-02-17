@@ -96,6 +96,8 @@ Flex布局支持IE10及以上版本浏览器。
 
 作用：`flex-grow`、`flex-shrink`、`flex-basis` 的复合属性。默认值0 1 auto。可选值auto（1 1 auto）具有弹性，none（0 0 auto）不具有弹性。
 
+`flex:1`代表`flex: 1 1 auto`
+
 ## align-self
 
 允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items。默认auto表示集成align-items的对齐方式
