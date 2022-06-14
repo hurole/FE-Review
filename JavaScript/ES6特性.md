@@ -207,7 +207,7 @@ Symbol 的内置值
 
 ### 20. ES Module
 
-## ES2016(ES7)
+## ES2016
 
 ### 1. Array.prototype.includes(value[,fromIndex])
 
@@ -238,7 +238,7 @@ Math.pow(2,2); // 4
 let result= 2**2； // 4
 ```
 
-## ES2017(ES8)
+## ES2017
 
 ### 1. Object.values(object)
 
@@ -334,8 +334,112 @@ async function foo1() {
 }
 ```
 
-## ES2018(ES9)
+## ES2018
 
 ### 1. 对象 Spread/Rest`...`
 
 ### 2. Promise.finally
+
+## ES2020
+
+### 1.可选链式操作符
+
+`?.`可选链式操作符，用于解决读取对象属性时对象属性不存在而导致的报错。举个例子：
+
+```js
+let obj = {
+  a: {
+    b: {
+      c: 2,
+    },
+  },
+};
+let s1 = obj.a.b.c; //2
+let s2 = obj.a.c.b; //Uncaught TypeError: Cannot read properties of undefined (reading 'b')
+let s3 = obj?.a?.c?.b; //undefined
+```
+
+上面 s1 是读取属性，并且属性都存在的情况。
+
+s2 是读取了一个不存在的属性 c，所以 c 为 undefined，然后又读取 c 上面的 b 属性，所以报类型错，提示我们不能读取`undefined`的属性，常见的场景就是接口返回数据，但是数据中不存在某个字段，但是前端读取了，导致报错应用崩溃。使用可选链式操作符就可以避免报错应用崩溃。
+
+s3 读取 obj 上的 a 属性，a 属性存在，继续读取 a 上的 c 属性，c 属性不存在直接返回 undefined，不会进而读取 c 上的 b 属性避免了报错。
+
+2.动态 import 语法
+
+## ES2021
+
+### 1. 逻辑赋值操作符
+
+| 操作符 | 作用                                                                                                        |
+| ------ | ----------------------------------------------------------------------------------------------------------- |
+| \|\|=  | 将操作符前后变量进行逻辑或运算，结果赋值给操作符前变量                                                      |
+| &&=    | 将操作符前后变量进行逻辑与运算，结果赋值给操作符前变量                                                      |
+| ??=    | 对操作符前变量进行判断，如果为 undefined 或者 null 就将操作符后的变量赋值给操作符前的变量，否则不执行赋值。 |
+
+```js
+let a = 0;
+b = 1;
+let a1 = true;
+b1 = "哈哈";
+let a2 = 0;
+b2 = "";
+// ||=
+console.log((a ||= b)); //1
+console.log((a1 ||= b1)); //true
+console.log((a2 ||= b2)); //0
+```
+
+```js
+let a = 0;
+b = 1;
+let a1 = true;
+b1 = "哈哈";
+let a2 = 0;
+b2 = "";
+// &&=
+console.log((a &&= b)); //0
+console.log((a1 &&= b1)); //哈哈
+console.log((a2 &&= b2)); //0
+```
+
+```js
+let a = 0;
+b = 1;
+let a1 = undefined;
+b1 = "哈哈";
+let a2 = null;
+b2 = "1";
+// ??=
+console.log((a ??= b)); //0
+console.log((a1 ??= b1)); //哈哈
+console.log((a2 ??= b2)); //1
+```
+
+### 2.数字分隔符
+
+Number 类型支持带有分隔符的字面量。
+
+**十进制**：
+
+```js
+let x = 1_024_221;
+let y = 1024221;
+console.log(x === y); // true
+```
+
+**二进制**
+
+```js
+let x = 0b11_0100_1010;
+let y = 0b1101001010;
+console.log(x === y); // true
+```
+
+十六进制
+
+```js
+let x = 0xff_10_a4;
+let y = 0xff10a4;
+console.log(x === y); // true
+```
