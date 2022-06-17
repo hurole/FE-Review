@@ -21,7 +21,7 @@ class Stack {
     return this.items.length;
   }
   toString() {
-    return this.items.toString();
+    return this.items.join(' ');
   }
 }
 
