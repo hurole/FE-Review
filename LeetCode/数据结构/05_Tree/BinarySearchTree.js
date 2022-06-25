@@ -80,6 +80,47 @@ class BinarySearchTree {
     this.postOrderTraverseNode(node.right);
     console.log(node.key);
   }
+  // 最小值
+  min() {
+    if (this.root === null) {
+      return false;
+    }
+    let current = this.root;
+    while (current.left) {
+      current = current.left;
+    }
+    return current.key;
+  }
+  // 最大值
+  max() {
+    if (this.root === null) {
+      return false;
+    }
+    let current = this.root;
+    while (current.right) {
+      current = current.right;
+    }
+    return current.key;
+  }
+
+  // 搜索
+  search(key) {
+    return this.searchNode(this.root, key);
+  }
+  searchNode(node, key) {
+    if (node === null) {
+      return false;
+    }
+    if (node.key === key) {
+      return node;
+    }
+    if (key < node.key) {
+      return this.searchNode(node.left, key);
+    }
+    if (key > node.key) {
+      return this.searchNode(node.right, key);
+    }
+  }
 }
 
 // test
@@ -93,4 +134,10 @@ bst.insert(5);
 console.log(bst);
 // bst.preOrderTraverse();
 // bst.inOrderTraverse();
-bst.postOrderTraverse()
+bst.postOrderTraverse();
+console.log("max:", bst.max());
+console.log("min:", bst.min());
+// 搜索
+console.log("search5", bst.search(5));
+console.log("search4", bst.search(4));
+console.log("search9", bst.search(9));
