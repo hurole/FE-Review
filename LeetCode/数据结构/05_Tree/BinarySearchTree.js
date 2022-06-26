@@ -108,6 +108,7 @@ class BinarySearchTree {
     return this.searchNode(this.root, key);
   }
   searchNode(node, key) {
+    // 空树查找失败
     if (node === null) {
       return false;
     }
@@ -121,23 +122,130 @@ class BinarySearchTree {
       return this.searchNode(node.right, key);
     }
   }
+  // 删除
+  remove(key) {
+    // 要被删除的节点
+    let current = this.root;
+    // 要被删除节点的父节点
+    let parent = null;
+    // 要被删除的节点是否为父节点的左子节点
+    let isLeftChild = false;
+    while (current && current.key !== key) {
+      if (key < current.key) {
+        parent = current;
+        current = current.left;
+        isLeftChild = true;
+      } else {
+        parent = current;
+        current = current.right;
+        isLeftChild = false;
+      }
+    }
+    // 树上不存在该节点，返回false
+    if (!current) {
+      return false;
+    }
+    // 要被删除的节点为叶子节点，直接删除
+    if (current.left === null && current.right === null) {
+      if (isLeftChild) {
+        parent.left = null;
+      } else {
+        parent.right = null;
+      }
+      return true;
+    }
+    // 要被删除的节点只存在一个子节点
+    if (current.left === null || current.right === null) {
+      // 被删除的节点含有一个左子节点，左子节点替换被删除的节点
+      if (current.left) {
+        if (isLeftChild) {
+          parent.left = current.left;
+        } else {
+          parent.right = current.left;
+        }
+        return true;
+      }
+      // 被删除的节点含有一个右子节点，右子节点替换被删除的节点
+      if (current.right) {
+        if (isLeftChild) {
+          parent.left = current.right;
+        } else {
+          parent.right = current.right;
+        }
+        return true;
+      }
+    }
+    // 要被删除的节点两个子节点都存在，需要找到前驱或者后继
+    let successor = this.getSuccessor(current);
+    if (current === this.root) {
+      this.root = successor;
+    } else if (isLeftChild) {
+      parent.left = successor;
+    } else {
+      parent.right = successor;
+    }
+    // 后继替换被删除节点的位置，所以要用被删除节点的左子树替换后继的左子树，被删除节点的右子树替换后继的右子树
+    successor.left = current.left;
+    return true;
+  }
+
+  // 查找指定节点的后继节点
+  getSuccessor(node) {
+    let successor = node.right;
+    let successorParent = node;
+    // 后继节点只可能存在右子节点，或者没有子节点。假设如果存在左子节点，根据二叉搜素树的规则左子节点才为后继节点
+    while (successor.left) {
+      successorParent = successor;
+      successor = successor.left;
+    }
+    // 判断寻找到的后续节点是否直接就是要删除节点的 right
+    if (successor !== node.right) {
+      successorParent.left = successor.right;
+      successor.right = node.right;
+    }
+    return successor;
+  }
 }
 
 // test
 let bst = new BinarySearchTree();
-bst.insert(3);
-bst.insert(4);
-bst.insert(1);
-bst.insert(2);
+bst.insert(10);
+bst.insert(8);
 bst.insert(5);
+bst.insert(7);
+bst.insert(9);
+bst.insert(15);
+bst.insert(13);
+bst.insert(16);
+bst.insert(1);
+bst.insert(12);
+bst.insert(17);
+// 结果为：
+//        10
+//      /   \
+//     8     15
+//    / \    / \
+//    5  9  13  16
+//   / \    /     \
+//   1  7  12      17
 
-console.log(bst);
 // bst.preOrderTraverse();
-// bst.inOrderTraverse();
-bst.postOrderTraverse();
+bst.inOrderTraverse();
+// bst.postOrderTraverse();
 console.log("max:", bst.max());
 console.log("min:", bst.min());
 // 搜索
 console.log("search5", bst.search(5));
 console.log("search4", bst.search(4));
 console.log("search9", bst.search(9));
+// 删除不存在的节点
+// let s = bst.remove(14);
+// 删除叶子节点
+// bst.remove(17);
+// 删除只存在一个子节点的节点
+// let s = bst.remove(13);
+// 删除两个子节点都存在的节点
+let s = bst.remove(10);
+
+console.log("------", s);
+bst.inOrderTraverse();
