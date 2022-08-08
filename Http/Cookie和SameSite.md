@@ -88,7 +88,7 @@ Set-Cookie: currCookie=7654321; Max-Age=600; Path=/; Expires=Sun, 12 Jun 2022 14
 # a.com/.well-know/first-party-set
 {
   "owner":"a.com",
-  "member":["b,com","d.com"]
+  "member":["b,com","c.com"]
 }
 ```
 

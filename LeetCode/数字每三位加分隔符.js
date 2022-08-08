@@ -60,6 +60,14 @@ function formatNumber1(num) {
   });
   return str;
 }
+
+function formatNumber2(num){
+  let str = num.toString();
+  let res = str.replace(/(\d{3})+$/,',$&');
+  let right = res.split(',')[1];
+  let s = res.split(',')[0]+right.replace(/(\d{3})/g,',$&');
+  console.log('res',res)
+}
 // 测试
-let str1 = formatNumber1(1234567890);
+let str1 = formatNumber2(1234567890);
 console.log(str1);
