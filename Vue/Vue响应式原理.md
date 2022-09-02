@@ -43,3 +43,4 @@ observe(data);
 data.age = "12"; // 打印 更新视图
 ```
 
+为了监听到数组的变化，Vue会重写那些可以改变原数组的七个方法，包括：push、pop、shift、unshift、reverse、splice、sort
