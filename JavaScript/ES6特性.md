@@ -119,6 +119,10 @@ delete 方法删除元素，返回 boolean 值
 
 has 方法检测是否包含指定元素，返回 boolean 值
 
+values 方法返回迭代器
+
+keys 方法返回迭代器
+
 ```js
 // 创建Set
 let set = new Set(["a", 1, {}]);

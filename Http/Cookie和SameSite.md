@@ -28,11 +28,11 @@ Set-Cookie: currCookie=7654321; Max-Age=600; Path=/; Expires=Sun, 12 Jun 2022 14
 
 ##### Domain
 
-- 作用指定 cookie 可以发送到的域名。不设置该字段默认为当前 http 服务器所在域名，例如：向`http://a.com/api`发送请求，cookie 的`Domain=a.com`。也可以设置`Domain=.a.com`，此时向`a.com`的子域发送请求也会携带 cookie，例如：向 api.a.com 域名发送请求也会协带 cookie。
+- 作用：指定 cookie 可以发送到的域名。不设置该字段默认为当前 http 服务器所在域名，例如：向`http://a.com/api`发送请求，cookie 的`Domain=a.com`。也可以设置`Domain=.a.com`，此时向`a.com`的子域发送请求也会携带 cookie，例如：向 api.a.com 域名发送请求也会协带 cookie。
 
 - Domain 字段设置的必须是合法域，例如当前`a.com`，设置`Domain=b.com`会被用户代理（例如浏览器）拒绝，不会被存储。
 
-  假设请求的服务器域名为`a.com`，及`Host: a.com`情况如下
+  假设请求的服务器域名为`a.com`
 
   | Domain           | 结果                                                       |
   | ---------------- | ---------------------------------------------------------- |
@@ -54,25 +54,25 @@ Set-Cookie: currCookie=7654321; Max-Age=600; Path=/; Expires=Sun, 12 Jun 2022 14
 
 ##### Expires
 
-作用指定 cookie 过期时间格式为 Http-Date， 例如`Expires=Mon, 13 Jun 2022 05:34:48 GMT`,不指定该字段 cookie 为会话 cookie 浏览器关闭就失效。
+作用指定 cookie 过期时间格式为 Http-Date， 例如`Expires=Mon, 13 Jun 2022 05:34:48 GMT`,不指定该属性和Max-Age属性 cookie 为会话 cookie 浏览器关闭就失效。
 
 ##### Max-Age
 
-作用指定 cookie 的过期时间格式为单位秒，例如`Max-Age:60`即为 60s 后过期。设置 0 或者-1cookie 会立即失效。同时存在 Expires 和 Max-Age，Max-Age 优先级更高。
+作用指定 cookie 的过期时间格式为单位秒，例如`Max-Age:60`即为 60s 后过期。设置 0 或者-1cookie 会立即失效。同时存在 Expires 和 Max-Age，Max-Age 优先级更高。一般情况下为了兼容性，两个属性都会设置。
 
 ##### SameSite
 
-作用指定跨站的 cookie 的处理方式。前端所在
+作用指定跨站请求的 cookie 的处理方式。发起请求的域名与cookie的domain不是一个域名，举个例子：set-cookie:a=1;domain=a.com，b.com向a.com发送请求时，cookie是否携带
 
-| SameSite        | 含义                                                                                                                                                                                                                                                               |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| SameSite=None   | 跨站时不对 cookie 做任何限制；此模式下 cookie 必须设置 secure，设置 secure 的前提是使用 https 传输 cookie。                                                                                                                                                        |
+| SameSite        | 含义                                                         |
+| --------------- | ------------------------------------------------------------ |
+| SameSite=None   | 跨站时不对 cookie 做任何限制；此模式下 cookie 必须设置 secure，设置了 secure 就必须使用 https 传输 cookie。 |
 | SameSite=Lax    | 浏览的默认行为；以下会跨站时会携带通过链接跳转，例如`<a href="http://a.com"></a>`这种情况会携带 cookie；get 请求的表单，例如`<form action='http://a.com' method="GET">`;预加载，例如`<link rel="prerender" href="http://a.com"/>`，其他跨站的请求都不会携带 cookie |
-| SameSite=Strict | 任何跨站的请求都不会携带 cookie                                                                                                                                                                                                                                    |
+| SameSite=Strict | 任何跨站的请求都不会携带 cookie                              |
 
 ##### Secure
 
-通过 https 传输才可以携带 cookie
+一个带有安全属性的 cookie 只有在请求使用 `https:` 协议（localhost 不受此限制）的时候才会被发送到服务器。以阻止中间人攻击。指定该属性时，如果请求使用的是http，响应中set-cookie中设置了secure属性，那么浏览器会拒绝存储该cookie。
 
 ##### HttpOnly
 

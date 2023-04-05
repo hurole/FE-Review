@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>闭包-Closure</title>
+</head>
+
+<body>
+    <script>
+        function foo() {
+            var myName = "zhangsan";
+            let test1 = 1;
+            const test2 = 2;
+            var innerBar = {
+                getName: function () {
+                    console.log(test1)
+                    return myName
+                },
+                setName: function (newName) {
+                    myName = newName
+                }
+            }
+            return innerBar;
+        }
+        var bar = foo();
+        bar.setName("lisi");
+        bar.getName(); // 1
+        console.log(bar.getName()) // 1 lisi
+    </script>
+</body>
+
+</html>

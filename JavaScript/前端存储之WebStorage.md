@@ -17,7 +17,7 @@ HTML5 增加的 WebStorage API 用于以键值对的方式存储数据，有 ses
 
 ### 生命周期
 
-sessionStorage 当浏览器的窗口或标签页关闭，数据就会清空。但是刷新页面时 sessionStorage 并不会被清空。
+sessionStorage 当浏览器的窗口或标签页关闭，数据就会清空。但是页面刷新和恢复时 sessionStorage 并不会被清空。
 
 ### 作用范围
 
