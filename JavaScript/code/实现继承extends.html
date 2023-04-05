@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>闭包-Closure</title>
+</head>
+
+<body>
+    <script>
+        class Parant1 {
+            constructor(name) {
+                this.name = name;
+            }
+            walk() {
+                console.log('walk1');
+            }
+            static sex = 'man1'
+        }
+        class Child1 extends Parant1 {
+            constructor(name, age) {
+                super(name);
+                this.age = age;
+            }
+            say() {
+                console.log('say1');
+            }
+            static height = 'small'
+        }
+
+
+        // 继承
+        function Parant(name) {
+            this.name = name
+        }
+        Parant.sex = 'man';
+        Parant.prototype.walk = function () {
+            console.log('walk');
+        }
+        function Child(name, age) {
+            Parant.call(this, name);
+            this.age = age;
+        }
+        // 更改原型
+        Child.prototype = Object.create(Parant.prototype)
+        Child.prototype.constructor = Child;
+        Child.__proto__ = Parant;
+        Child.prototype.say = function () {
+            console.log('say')
+        }
+        Child.height = 'small';
+
+        let children = new Child('child', 18);
+        let children1 = new Child1('child', 18);
+        console.log(children, children1)
+        children.say();
+        children.walk();
+        console.log(Child.sex)
+    </script>
+</body>
+
+</html>
